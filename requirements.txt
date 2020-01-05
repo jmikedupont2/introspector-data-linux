@@ -1,0 +1,1 @@
+-e git+https://github.com/h4ck3rm1k3/gcc_py_introspector.git#egg=gcc_py_introspector
