@@ -57,3 +57,19 @@ All integer type
 ```
 jq '.nodes[]|select(._type=="integer_type")| select(.qual)|._id + "\t" .size + "\t" + .sign + "\t" + .prec + "\t" + .algn + "\t" + .min + "\t" + .max + "\t" + .name + "\t" + .unqual + "\t" + .qual    ' linux_clean.json  -r  > integer_type.csv
 ```
+
+# feature preparation
+
+`python3 prepare_features.py > expanded_data.json`
+
+extract the most common keys like this :
+`jq -r ".|keys" expanded_data.json | sort | uniq -c | sort -n > common_paths.txt`
+
+see common_paths.txt for the top ones
+
+`jq -r "._type" expanded_data.json | sort | uniq -c | sort -n > type_count.txt`
+
+Extract the most common one:
+
+`grep "\"_type\": \"identifier_node__stringstring_identifier_node__string_lenpythonint" expanded_data.json | sort -u > indentifiers.txt`
+grep "\"_type\": \"identifier_node__stringstring_identifier_node__string_lenpythonint" expanded_data.json| jq ._string  -r | sort -u > names.txt
