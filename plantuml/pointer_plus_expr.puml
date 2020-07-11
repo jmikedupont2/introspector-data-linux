@@ -1,0 +1,25 @@
+@startuml
+abstract class	OP	 #red	
+OP	 --|> 	pointer_plus_expr	
+indirect_ref	 --|> 	OP	
+abstract class	type	 #red	
+type	 --|> 	pointer_type	
+pointer_plus_expr	 --|> 	type	
+OP	 --|> 	parm_decl	
+pointer_plus_expr	 --|> 	OP	
+OP	 --|> 	nop_expr	
+abstract class	init	 #red	
+init	 --|> 	pointer_plus_expr	
+var_decl	 --|> 	init	
+modify_expr	 --|> 	OP	
+OP	 --|> 	component_ref	
+OP	 --|> 	integer_cst	
+OP	 --|> 	negate_expr	
+abstract class	E	 #red	
+E	 --|> 	pointer_plus_expr	
+call_expr	 --|> 	E	
+nop_expr	 --|> 	OP	
+OP	 --|> 	var_decl	
+ne_expr	 --|> 	OP	
+OP	 --|> 	plus_expr	
+@enduml

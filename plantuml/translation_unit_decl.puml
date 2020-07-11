@@ -1,0 +1,14 @@
+@startuml
+abstract class	scpe	 #red	
+scpe	 --|> 	translation_unit_decl	
+function_decl	 --|> 	scpe	
+abstract class	name	 #red	
+name	 --|> 	identifier_node	
+translation_unit_decl	 --|> 	name	
+type_decl	 --|> 	scpe	
+const_decl	 --|> 	scpe	
+abstract class	value	 #red	
+value	 --|> 	translation_unit_decl	
+integer_cst	 --|> 	value	
+var_decl	 --|> 	scpe	
+@enduml

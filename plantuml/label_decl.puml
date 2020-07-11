@@ -1,0 +1,21 @@
+@startuml
+abstract class	name	 #red	
+name	 --|> 	label_decl	
+label_expr	 --|> 	name	
+abstract class	type	 #red	
+type	 --|> 	void_type	
+label_decl	 --|> 	type	
+abstract class	scpe	 #red	
+scpe	 --|> 	function_decl	
+label_decl	 --|> 	scpe	
+case_label_expr	 --|> 	name	
+abstract class	labl	 #red	
+labl	 --|> 	label_decl	
+goto_expr	 --|> 	labl	
+abstract class	chain	 #red	
+chain	 --|> 	label_decl	
+var_decl	 --|> 	chain	
+name	 --|> 	identifier_node	
+label_decl	 --|> 	name	
+label_decl	 --|> 	chain	
+@enduml

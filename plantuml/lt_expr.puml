@@ -1,0 +1,19 @@
+@startuml
+abstract class	OP	 #red	
+OP	 --|> 	lt_expr	
+truth_orif_expr	 --|> 	OP	
+abstract class	type	 #red	
+type	 --|> 	integer_type	
+lt_expr	 --|> 	type	
+OP	 --|> 	call_expr	
+lt_expr	 --|> 	OP	
+OP	 --|> 	nop_expr	
+cond_expr	 --|> 	OP	
+OP	 --|> 	parm_decl	
+OP	 --|> 	integer_cst	
+OP	 --|> 	var_decl	
+OP	 --|> 	trunc_div_expr	
+OP	 --|> 	component_ref	
+OP	 --|> 	minus_expr	
+truth_andif_expr	 --|> 	OP	
+@enduml

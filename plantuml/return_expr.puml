@@ -1,0 +1,21 @@
+@startuml
+abstract class	body	 #red	
+body	 --|> 	return_expr	
+bind_expr	 --|> 	body	
+abstract class	type	 #red	
+type	 --|> 	void_type	
+return_expr	 --|> 	type	
+abstract class	expr	 #red	
+expr	 --|> 	modify_expr	
+return_expr	 --|> 	expr	
+abstract class	E	 #red	
+E	 --|> 	return_expr	
+statement_list	 --|> 	E	
+abstract class	OP	 #red	
+OP	 --|> 	return_expr	
+cond_expr	 --|> 	OP	
+abstract class	value	 #red	
+value	 --|> 	return_expr	
+integer_cst	 --|> 	value	
+expr	 --|> 	call_expr	
+@enduml

@@ -1,0 +1,8 @@
+@startuml
+abstract class	E	 #red	
+E	 --|> 	decl_expr	
+statement_list	 --|> 	E	
+abstract class	type	 #red	
+type	 --|> 	void_type	
+decl_expr	 --|> 	type	
+@enduml

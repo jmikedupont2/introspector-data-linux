@@ -1,0 +1,14 @@
+@startuml
+abstract class	OP	 #red	
+OP	 --|> 	negate_expr	
+bit_and_expr	 --|> 	OP	
+abstract class	type	 #red	
+type	 --|> 	integer_type	
+negate_expr	 --|> 	type	
+OP	 --|> 	parm_decl	
+negate_expr	 --|> 	OP	
+pointer_plus_expr	 --|> 	OP	
+OP	 --|> 	nop_expr	
+modify_expr	 --|> 	OP	
+OP	 --|> 	indirect_ref	
+@enduml

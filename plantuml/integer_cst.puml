@@ -1,0 +1,117 @@
+@startuml
+abstract class	size	 #red	
+size	 --|> 	integer_cst	
+integer_type	 --|> 	size	
+abstract class	min	 #red	
+min	 --|> 	integer_cst	
+integer_type	 --|> 	min	
+abstract class	max	 #red	
+max	 --|> 	integer_cst	
+integer_type	 --|> 	max	
+abstract class	type	 #red	
+type	 --|> 	integer_type	
+integer_cst	 --|> 	type	
+abstract class	value	 #red	
+value	 --|> 	type_decl	
+integer_cst	 --|> 	value	
+value	 --|> 	identifier_node	
+value	 --|> 	integer_cst	
+value	 --|> 	integer_type	
+value	 --|> 	field_decl	
+real_type	 --|> 	size	
+complex_type	 --|> 	size	
+array_type	 --|> 	size	
+value	 --|> 	function_decl	
+record_type	 --|> 	size	
+pointer_type	 --|> 	size	
+field_decl	 --|> 	size	
+abstract class	bpos	 #red	
+bpos	 --|> 	integer_cst	
+field_decl	 --|> 	bpos	
+function_type	 --|> 	size	
+enumeral_type	 --|> 	size	
+enumeral_type	 --|> 	min	
+enumeral_type	 --|> 	max	
+abstract class	cnst	 #red	
+cnst	 --|> 	integer_cst	
+const_decl	 --|> 	cnst	
+abstract class	valu	 #red	
+valu	 --|> 	integer_cst	
+tree_list	 --|> 	valu	
+value	 --|> 	record_type	
+value	 --|> 	modify_expr	
+parm_decl	 --|> 	size	
+result_decl	 --|> 	size	
+union_type	 --|> 	size	
+value	 --|> 	const_decl	
+value	 --|> 	translation_unit_decl	
+value	 --|> 	bind_expr	
+abstract class	low	 #red	
+low	 --|> 	integer_cst	
+case_label_expr	 --|> 	low	
+abstract class	E	 #red	
+E	 --|> 	integer_cst	
+call_expr	 --|> 	E	
+boolean_type	 --|> 	size	
+abstract class	OP	 #red	
+OP	 --|> 	integer_cst	
+ne_expr	 --|> 	OP	
+var_decl	 --|> 	size	
+type	 --|> 	pointer_type	
+value	 --|> 	tree_list	
+eq_expr	 --|> 	OP	
+value	 --|> 	return_expr	
+postincrement_expr	 --|> 	OP	
+gt_expr	 --|> 	OP	
+le_expr	 --|> 	OP	
+bit_and_expr	 --|> 	OP	
+value	 --|> 	pointer_type	
+modify_expr	 --|> 	OP	
+value	 --|> 	union_type	
+abstract class	init	 #red	
+init	 --|> 	integer_cst	
+var_decl	 --|> 	init	
+ge_expr	 --|> 	OP	
+plus_expr	 --|> 	OP	
+rshift_expr	 --|> 	OP	
+lshift_expr	 --|> 	OP	
+trunc_mod_expr	 --|> 	OP	
+mult_expr	 --|> 	OP	
+trunc_div_expr	 --|> 	OP	
+cond_expr	 --|> 	OP	
+predecrement_expr	 --|> 	OP	
+lt_expr	 --|> 	OP	
+value	 --|> 	real_type	
+abstract class	cond	 #red	
+cond	 --|> 	integer_cst	
+switch_expr	 --|> 	cond	
+nop_expr	 --|> 	OP	
+type	 --|> 	boolean_type	
+lrotate_expr	 --|> 	OP	
+value	 --|> 	complex_type	
+value	 --|> 	function_type	
+value	 --|> 	array_type	
+value	 --|> 	addr_expr	
+pointer_bounds_type	 --|> 	size	
+value	 --|> 	void_type	
+value	 --|> 	call_expr	
+value	 --|> 	eq_expr	
+type	 --|> 	enumeral_type	
+value	 --|> 	ne_expr	
+value	 --|> 	parm_decl	
+value	 --|> 	result_decl	
+value	 --|> 	plus_expr	
+value	 --|> 	nop_expr	
+value	 --|> 	bit_and_expr	
+value	 --|> 	enumeral_type	
+vector_type	 --|> 	size	
+array_ref	 --|> 	OP	
+pointer_plus_expr	 --|> 	OP	
+convert_expr	 --|> 	OP	
+min_expr	 --|> 	OP	
+postdecrement_expr	 --|> 	OP	
+preincrement_expr	 --|> 	OP	
+minus_expr	 --|> 	OP	
+bit_field_ref	 --|> 	OP	
+reference_type	 --|> 	size	
+@enduml

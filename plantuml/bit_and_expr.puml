@@ -1,0 +1,36 @@
+@startuml
+abstract class	OP	 #red	
+OP	 --|> 	bit_and_expr	
+ne_expr	 --|> 	OP	
+eq_expr	 --|> 	OP	
+abstract class	type	 #red	
+type	 --|> 	integer_type	
+bit_and_expr	 --|> 	type	
+OP	 --|> 	parm_decl	
+bit_and_expr	 --|> 	OP	
+OP	 --|> 	integer_cst	
+modify_expr	 --|> 	OP	
+OP	 --|> 	indirect_ref	
+OP	 --|> 	bit_not_expr	
+OP	 --|> 	var_decl	
+OP	 --|> 	nop_expr	
+rshift_expr	 --|> 	OP	
+OP	 --|> 	negate_expr	
+OP	 --|> 	component_ref	
+bit_ior_expr	 --|> 	OP	
+OP	 --|> 	rshift_expr	
+OP	 --|> 	lshift_expr	
+abstract class	value	 #red	
+value	 --|> 	bit_and_expr	
+integer_cst	 --|> 	value	
+OP	 --|> 	plus_expr	
+OP	 --|> 	cond_expr	
+lshift_expr	 --|> 	OP	
+abstract class	E	 #red	
+E	 --|> 	bit_and_expr	
+call_expr	 --|> 	E	
+plus_expr	 --|> 	OP	
+minus_expr	 --|> 	OP	
+OP	 --|> 	bit_field_ref	
+array_ref	 --|> 	OP	
+@enduml

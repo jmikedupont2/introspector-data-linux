@@ -1,0 +1,11 @@
+@startuml
+abstract class	OP	 #red	
+OP	 --|> 	trunc_mod_expr	
+lshift_expr	 --|> 	OP	
+abstract class	type	 #red	
+type	 --|> 	integer_type	
+trunc_mod_expr	 --|> 	type	
+OP	 --|> 	parm_decl	
+trunc_mod_expr	 --|> 	OP	
+OP	 --|> 	integer_cst	
+@enduml

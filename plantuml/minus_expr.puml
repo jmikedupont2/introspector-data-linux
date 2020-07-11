@@ -1,0 +1,23 @@
+@startuml
+abstract class	OP	 #red	
+OP	 --|> 	minus_expr	
+nop_expr	 --|> 	OP	
+abstract class	type	 #red	
+type	 --|> 	integer_type	
+minus_expr	 --|> 	type	
+OP	 --|> 	convert_expr	
+minus_expr	 --|> 	OP	
+OP	 --|> 	nop_expr	
+modify_expr	 --|> 	OP	
+OP	 --|> 	var_decl	
+OP	 --|> 	parm_decl	
+OP	 --|> 	component_ref	
+plus_expr	 --|> 	OP	
+lt_expr	 --|> 	OP	
+abstract class	E	 #red	
+E	 --|> 	minus_expr	
+call_expr	 --|> 	E	
+float_expr	 --|> 	OP	
+OP	 --|> 	integer_cst	
+OP	 --|> 	bit_and_expr	
+@enduml

@@ -1,0 +1,13 @@
+@startuml
+abstract class	OP	 #red	
+OP	 --|> 	bit_not_expr	
+bit_and_expr	 --|> 	OP	
+abstract class	type	 #red	
+type	 --|> 	integer_type	
+bit_not_expr	 --|> 	type	
+OP	 --|> 	lshift_expr	
+bit_not_expr	 --|> 	OP	
+OP	 --|> 	var_decl	
+nop_expr	 --|> 	OP	
+OP	 --|> 	indirect_ref	
+@enduml

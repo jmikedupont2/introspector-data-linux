@@ -1,0 +1,11 @@
+@startuml
+abstract class	OP	 #red	
+OP	 --|> 	bit_field_ref	
+bit_and_expr	 --|> 	OP	
+abstract class	type	 #red	
+type	 --|> 	integer_type	
+bit_field_ref	 --|> 	type	
+OP	 --|> 	indirect_ref	
+bit_field_ref	 --|> 	OP	
+OP	 --|> 	integer_cst	
+@enduml

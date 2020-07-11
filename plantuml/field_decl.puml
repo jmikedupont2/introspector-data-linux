@@ -1,0 +1,38 @@
+@startuml
+abstract class	value	 #red	
+value	 --|> 	field_decl	
+integer_cst	 --|> 	value	
+abstract class	flds	 #red	
+flds	 --|> 	field_decl	
+record_type	 --|> 	flds	
+abstract class	name	 #red	
+name	 --|> 	identifier_node	
+field_decl	 --|> 	name	
+abstract class	type	 #red	
+type	 --|> 	integer_type	
+field_decl	 --|> 	type	
+abstract class	scpe	 #red	
+scpe	 --|> 	record_type	
+field_decl	 --|> 	scpe	
+abstract class	chain	 #red	
+chain	 --|> 	field_decl	
+field_decl	 --|> 	chain	
+abstract class	size	 #red	
+size	 --|> 	integer_cst	
+field_decl	 --|> 	size	
+abstract class	bpos	 #red	
+bpos	 --|> 	integer_cst	
+field_decl	 --|> 	bpos	
+type	 --|> 	pointer_type	
+type	 --|> 	enumeral_type	
+type	 --|> 	array_type	
+type	 --|> 	record_type	
+type	 --|> 	union_type	
+union_type	 --|> 	flds	
+scpe	 --|> 	union_type	
+abstract class	OP	 #red	
+OP	 --|> 	field_decl	
+component_ref	 --|> 	OP	
+type	 --|> 	boolean_type	
+type	 --|> 	real_type	
+@enduml

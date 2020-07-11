@@ -1,0 +1,37 @@
+@startuml
+abstract class	type	 #red	
+type	 --|> 	void_type	
+type_decl	 --|> 	type	
+abstract class	name	 #red	
+name	 --|> 	type_decl	
+void_type	 --|> 	name	
+abstract class	ptd	 #red	
+ptd	 --|> 	void_type	
+pointer_type	 --|> 	ptd	
+abstract class	valu	 #red	
+valu	 --|> 	void_type	
+tree_list	 --|> 	valu	
+bind_expr	 --|> 	type	
+return_expr	 --|> 	type	
+abstract class	retn	 #red	
+retn	 --|> 	void_type	
+function_type	 --|> 	retn	
+abstract class	unql	 #red	
+unql	 --|> 	void_type	
+void_type	 --|> 	unql	
+label_expr	 --|> 	type	
+label_decl	 --|> 	type	
+case_label_expr	 --|> 	type	
+goto_expr	 --|> 	type	
+asm_expr	 --|> 	type	
+cond_expr	 --|> 	type	
+call_expr	 --|> 	type	
+decl_expr	 --|> 	type	
+modify_expr	 --|> 	type	
+nop_expr	 --|> 	type	
+abstract class	value	 #red	
+value	 --|> 	void_type	
+integer_cst	 --|> 	value	
+convert_expr	 --|> 	type	
+predict_expr	 --|> 	type	
+@enduml

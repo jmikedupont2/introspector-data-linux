@@ -1,0 +1,12 @@
+@startuml
+abstract class	E	 #red	
+E	 --|> 	postdecrement_expr	
+statement_list	 --|> 	E	
+abstract class	type	 #red	
+type	 --|> 	integer_type	
+postdecrement_expr	 --|> 	type	
+abstract class	OP	 #red	
+OP	 --|> 	var_decl	
+postdecrement_expr	 --|> 	OP	
+OP	 --|> 	integer_cst	
+@enduml

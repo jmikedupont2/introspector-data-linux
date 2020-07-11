@@ -1,0 +1,11 @@
+@startuml
+abstract class	OP	 #red	
+OP	 --|> 	rdiv_expr	
+modify_expr	 --|> 	OP	
+abstract class	type	 #red	
+type	 --|> 	real_type	
+rdiv_expr	 --|> 	type	
+OP	 --|> 	float_expr	
+rdiv_expr	 --|> 	OP	
+OP	 --|> 	real_cst	
+@enduml

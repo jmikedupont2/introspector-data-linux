@@ -1,0 +1,10 @@
+@startuml
+abstract class	OP	 #red	
+OP	 --|> 	max_expr	
+modify_expr	 --|> 	OP	
+abstract class	type	 #red	
+type	 --|> 	integer_type	
+max_expr	 --|> 	type	
+OP	 --|> 	var_decl	
+max_expr	 --|> 	OP	
+@enduml

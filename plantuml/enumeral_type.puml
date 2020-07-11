@@ -1,0 +1,42 @@
+@startuml
+abstract class	type	 #red	
+type	 --|> 	enumeral_type	
+type_decl	 --|> 	type	
+abstract class	name	 #red	
+name	 --|> 	identifier_node	
+enumeral_type	 --|> 	name	
+abstract class	size	 #red	
+size	 --|> 	integer_cst	
+enumeral_type	 --|> 	size	
+abstract class	min	 #red	
+min	 --|> 	integer_cst	
+enumeral_type	 --|> 	min	
+abstract class	max	 #red	
+max	 --|> 	integer_cst	
+enumeral_type	 --|> 	max	
+abstract class	csts	 #red	
+csts	 --|> 	tree_list	
+enumeral_type	 --|> 	csts	
+const_decl	 --|> 	type	
+field_decl	 --|> 	type	
+name	 --|> 	type_decl	
+abstract class	unql	 #red	
+unql	 --|> 	enumeral_type	
+enumeral_type	 --|> 	unql	
+abstract class	valu	 #red	
+valu	 --|> 	enumeral_type	
+tree_list	 --|> 	valu	
+abstract class	retn	 #red	
+retn	 --|> 	enumeral_type	
+function_type	 --|> 	retn	
+abstract class	ptd	 #red	
+ptd	 --|> 	enumeral_type	
+pointer_type	 --|> 	ptd	
+integer_cst	 --|> 	type	
+abstract class	value	 #red	
+value	 --|> 	enumeral_type	
+integer_cst	 --|> 	value	
+modify_expr	 --|> 	type	
+component_ref	 --|> 	type	
+var_decl	 --|> 	type	
+@enduml

@@ -1,0 +1,29 @@
+@startuml
+abstract class	fn	 #red	
+fn	 --|> 	addr_expr	
+call_expr	 --|> 	fn	
+abstract class	type	 #red	
+type	 --|> 	pointer_type	
+addr_expr	 --|> 	type	
+abstract class	OP	 #red	
+OP	 --|> 	function_decl	
+addr_expr	 --|> 	OP	
+OP	 --|> 	addr_expr	
+nop_expr	 --|> 	OP	
+OP	 --|> 	string_cst	
+OP	 --|> 	component_ref	
+modify_expr	 --|> 	OP	
+eq_expr	 --|> 	OP	
+abstract class	E	 #red	
+E	 --|> 	addr_expr	
+call_expr	 --|> 	E	
+OP	 --|> 	parm_decl	
+OP	 --|> 	var_decl	
+abstract class	value	 #red	
+value	 --|> 	addr_expr	
+integer_cst	 --|> 	value	
+OP	 --|> 	array_ref	
+abstract class	init	 #red	
+init	 --|> 	addr_expr	
+var_decl	 --|> 	init	
+@enduml

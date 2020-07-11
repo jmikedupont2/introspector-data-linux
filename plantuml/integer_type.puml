@@ -1,0 +1,87 @@
+@startuml
+abstract class	type	 #red	
+type	 --|> 	integer_type	
+type_decl	 --|> 	type	
+abstract class	name	 #red	
+name	 --|> 	type_decl	
+integer_type	 --|> 	name	
+abstract class	size	 #red	
+size	 --|> 	integer_cst	
+integer_type	 --|> 	size	
+abstract class	min	 #red	
+min	 --|> 	integer_cst	
+integer_type	 --|> 	min	
+abstract class	max	 #red	
+max	 --|> 	integer_cst	
+integer_type	 --|> 	max	
+integer_cst	 --|> 	type	
+name	 --|> 	identifier_node	
+abstract class	value	 #red	
+value	 --|> 	integer_type	
+integer_cst	 --|> 	value	
+abstract class	domn	 #red	
+domn	 --|> 	integer_type	
+array_type	 --|> 	domn	
+abstract class	ptd	 #red	
+ptd	 --|> 	integer_type	
+pointer_type	 --|> 	ptd	
+field_decl	 --|> 	type	
+abstract class	valu	 #red	
+valu	 --|> 	integer_type	
+tree_list	 --|> 	valu	
+abstract class	unql	 #red	
+unql	 --|> 	integer_type	
+integer_type	 --|> 	unql	
+abstract class	elts	 #red	
+elts	 --|> 	integer_type	
+array_type	 --|> 	elts	
+abstract class	retn	 #red	
+retn	 --|> 	integer_type	
+function_type	 --|> 	retn	
+parm_decl	 --|> 	type	
+abstract class	argt	 #red	
+argt	 --|> 	integer_type	
+parm_decl	 --|> 	argt	
+modify_expr	 --|> 	type	
+result_decl	 --|> 	type	
+nop_expr	 --|> 	type	
+call_expr	 --|> 	type	
+switch_expr	 --|> 	type	
+indirect_ref	 --|> 	type	
+truth_andif_expr	 --|> 	type	
+ne_expr	 --|> 	type	
+truth_orif_expr	 --|> 	type	
+eq_expr	 --|> 	type	
+lt_expr	 --|> 	type	
+cond_expr	 --|> 	type	
+ge_expr	 --|> 	type	
+convert_expr	 --|> 	type	
+gt_expr	 --|> 	type	
+le_expr	 --|> 	type	
+bit_and_expr	 --|> 	type	
+var_decl	 --|> 	type	
+plus_expr	 --|> 	type	
+rshift_expr	 --|> 	type	
+lshift_expr	 --|> 	type	
+bit_ior_expr	 --|> 	type	
+bit_not_expr	 --|> 	type	
+trunc_mod_expr	 --|> 	type	
+mult_expr	 --|> 	type	
+bit_xor_expr	 --|> 	type	
+save_expr	 --|> 	type	
+trunc_div_expr	 --|> 	type	
+negate_expr	 --|> 	type	
+predecrement_expr	 --|> 	type	
+minus_expr	 --|> 	type	
+component_ref	 --|> 	type	
+target_expr	 --|> 	type	
+lrotate_expr	 --|> 	type	
+array_ref	 --|> 	type	
+postincrement_expr	 --|> 	type	
+min_expr	 --|> 	type	
+max_expr	 --|> 	type	
+postdecrement_expr	 --|> 	type	
+preincrement_expr	 --|> 	type	
+compound_expr	 --|> 	type	
+bit_field_ref	 --|> 	type	
+@enduml

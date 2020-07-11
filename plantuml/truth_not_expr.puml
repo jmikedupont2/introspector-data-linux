@@ -1,0 +1,11 @@
+@startuml
+abstract class	OP	 #red	
+OP	 --|> 	truth_not_expr	
+nop_expr	 --|> 	OP	
+abstract class	type	 #red	
+type	 --|> 	boolean_type	
+truth_not_expr	 --|> 	type	
+OP	 --|> 	component_ref	
+truth_not_expr	 --|> 	OP	
+OP	 --|> 	call_expr	
+@enduml

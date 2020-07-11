@@ -1,0 +1,41 @@
+@startuml
+abstract class	E	 #red	
+E	 --|> 	cond_expr	
+statement_list	 --|> 	E	
+abstract class	type	 #red	
+type	 --|> 	void_type	
+cond_expr	 --|> 	type	
+abstract class	OP	 #red	
+OP	 --|> 	truth_andif_expr	
+cond_expr	 --|> 	OP	
+OP	 --|> 	return_expr	
+OP	 --|> 	cond_expr	
+modify_expr	 --|> 	OP	
+type	 --|> 	integer_type	
+OP	 --|> 	ne_expr	
+OP	 --|> 	call_expr	
+OP	 --|> 	nop_expr	
+OP	 --|> 	gt_expr	
+OP	 --|> 	statement_list	
+OP	 --|> 	le_expr	
+OP	 --|> 	eq_expr	
+abstract class	body	 #red	
+body	 --|> 	cond_expr	
+bind_expr	 --|> 	body	
+OP	 --|> 	modify_expr	
+OP	 --|> 	lt_expr	
+OP	 --|> 	ge_expr	
+OP	 --|> 	truth_orif_expr	
+OP	 --|> 	integer_cst	
+OP	 --|> 	bind_expr	
+OP	 --|> 	goto_expr	
+OP	 --|> 	convert_expr	
+bit_and_expr	 --|> 	OP	
+OP	 --|> 	plus_expr	
+abstract class	init	 #red	
+init	 --|> 	cond_expr	
+var_decl	 --|> 	init	
+type	 --|> 	pointer_type	
+call_expr	 --|> 	E	
+OP	 --|> 	compound_expr	
+@enduml

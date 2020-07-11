@@ -1,0 +1,69 @@
+@startuml
+abstract class	args	 #red	
+args	 --|> 	parm_decl	
+function_decl	 --|> 	args	
+abstract class	name	 #red	
+name	 --|> 	identifier_node	
+parm_decl	 --|> 	name	
+abstract class	type	 #red	
+type	 --|> 	integer_type	
+parm_decl	 --|> 	type	
+abstract class	scpe	 #red	
+scpe	 --|> 	function_decl	
+parm_decl	 --|> 	scpe	
+abstract class	argt	 #red	
+argt	 --|> 	integer_type	
+parm_decl	 --|> 	argt	
+abstract class	size	 #red	
+size	 --|> 	integer_cst	
+parm_decl	 --|> 	size	
+abstract class	used	 #red	
+used	 --|> 	type_decl	
+parm_decl	 --|> 	used	
+abstract class	OP	 #red	
+OP	 --|> 	parm_decl	
+modify_expr	 --|> 	OP	
+abstract class	E	 #red	
+E	 --|> 	parm_decl	
+call_expr	 --|> 	E	
+nop_expr	 --|> 	OP	
+type	 --|> 	pointer_type	
+abstract class	chain	 #red	
+chain	 --|> 	parm_decl	
+parm_decl	 --|> 	chain	
+argt	 --|> 	pointer_type	
+abstract class	cond	 #red	
+cond	 --|> 	parm_decl	
+switch_expr	 --|> 	cond	
+convert_expr	 --|> 	OP	
+indirect_ref	 --|> 	OP	
+bit_and_expr	 --|> 	OP	
+eq_expr	 --|> 	OP	
+ne_expr	 --|> 	OP	
+rshift_expr	 --|> 	OP	
+lshift_expr	 --|> 	OP	
+addr_expr	 --|> 	OP	
+pointer_plus_expr	 --|> 	OP	
+trunc_mod_expr	 --|> 	OP	
+trunc_div_expr	 --|> 	OP	
+le_expr	 --|> 	OP	
+negate_expr	 --|> 	OP	
+mult_expr	 --|> 	OP	
+bit_ior_expr	 --|> 	OP	
+lt_expr	 --|> 	OP	
+abstract class	fn	 #red	
+fn	 --|> 	parm_decl	
+call_expr	 --|> 	fn	
+abstract class	init	 #red	
+init	 --|> 	parm_decl	
+var_decl	 --|> 	init	
+minus_expr	 --|> 	OP	
+type	 --|> 	boolean_type	
+abstract class	value	 #red	
+value	 --|> 	parm_decl	
+integer_cst	 --|> 	value	
+gt_expr	 --|> 	OP	
+array_ref	 --|> 	OP	
+plus_expr	 --|> 	OP	
+ge_expr	 --|> 	OP	
+@enduml

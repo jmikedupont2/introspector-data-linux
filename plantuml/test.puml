@@ -1,0 +1,36 @@
+@startuml
+decl	 --> 	identifier_node
+decl	 --> 	type
+decl	 --> 	decl
+type	 --> 	decl
+type	 --> 	cst
+cst	 --> 	type
+cst	 --> 	decl
+type	 --> 	identifier_node
+cst	 --> 	identifier_node
+cst	 --> 	cst
+type	 --> 	type
+decl	 --> 	cst
+type	 --> 	tree_list
+tree_list	 --> 	type
+tree_list	 --> 	tree_list
+tree_list	 --> 	identifier_node
+tree_list	 --> 	cst
+cst	 --> 	expr
+decl	 --> 	expr
+expr	 --> 	type
+expr	 --> 	expr
+expr	 --> 	decl
+expr	 --> 	list
+list	 --> 	expr
+expr	 --> 	cst
+expr	 --> 	ref
+ref	 --> 	type
+ref	 --> 	expr
+cst	 --> 	tree_list
+ref	 --> 	ref
+ref	 --> 	decl
+decl	 --> 	constructor
+decl	 --> 	ref
+ref	 --> 	cst
+@enduml 

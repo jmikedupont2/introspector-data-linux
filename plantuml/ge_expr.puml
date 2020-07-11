@@ -1,0 +1,23 @@
+@startuml
+abstract class	E	 #red	
+E	 --|> 	ge_expr	
+call_expr	 --|> 	E	
+abstract class	type	 #red	
+type	 --|> 	integer_type	
+ge_expr	 --|> 	type	
+abstract class	OP	 #red	
+OP	 --|> 	component_ref	
+ge_expr	 --|> 	OP	
+OP	 --|> 	ge_expr	
+cond_expr	 --|> 	OP	
+OP	 --|> 	nop_expr	
+OP	 --|> 	integer_cst	
+OP	 --|> 	var_decl	
+abstract class	init	 #red	
+init	 --|> 	ge_expr	
+var_decl	 --|> 	init	
+OP	 --|> 	parm_decl	
+truth_orif_expr	 --|> 	OP	
+modify_expr	 --|> 	OP	
+type	 --|> 	boolean_type	
+@enduml

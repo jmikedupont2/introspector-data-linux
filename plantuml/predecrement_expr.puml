@@ -1,0 +1,14 @@
+@startuml
+abstract class	E	 #red	
+E	 --|> 	predecrement_expr	
+statement_list	 --|> 	E	
+abstract class	type	 #red	
+type	 --|> 	integer_type	
+predecrement_expr	 --|> 	type	
+abstract class	OP	 #red	
+OP	 --|> 	var_decl	
+predecrement_expr	 --|> 	OP	
+OP	 --|> 	integer_cst	
+OP	 --|> 	predecrement_expr	
+eq_expr	 --|> 	OP	
+@enduml

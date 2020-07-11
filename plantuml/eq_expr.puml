@@ -1,0 +1,33 @@
+@startuml
+abstract class	OP	 #red	
+OP	 --|> 	eq_expr	
+truth_orif_expr	 --|> 	OP	
+abstract class	type	 #red	
+type	 --|> 	integer_type	
+eq_expr	 --|> 	type	
+OP	 --|> 	call_expr	
+eq_expr	 --|> 	OP	
+OP	 --|> 	integer_cst	
+OP	 --|> 	bit_and_expr	
+modify_expr	 --|> 	OP	
+OP	 --|> 	nop_expr	
+OP	 --|> 	parm_decl	
+cond_expr	 --|> 	OP	
+truth_andif_expr	 --|> 	OP	
+OP	 --|> 	var_decl	
+OP	 --|> 	component_ref	
+type	 --|> 	boolean_type	
+OP	 --|> 	addr_expr	
+abstract class	E	 #red	
+E	 --|> 	eq_expr	
+call_expr	 --|> 	E	
+abstract class	value	 #red	
+value	 --|> 	eq_expr	
+integer_cst	 --|> 	value	
+OP	 --|> 	indirect_ref	
+OP	 --|> 	array_ref	
+abstract class	init	 #red	
+init	 --|> 	eq_expr	
+var_decl	 --|> 	init	
+OP	 --|> 	predecrement_expr	
+@enduml

@@ -1,0 +1,11 @@
+@startuml
+abstract class	E	 #red	
+E	 --|> 	label_expr	
+statement_list	 --|> 	E	
+abstract class	type	 #red	
+type	 --|> 	void_type	
+label_expr	 --|> 	type	
+abstract class	name	 #red	
+name	 --|> 	label_decl	
+label_expr	 --|> 	name	
+@enduml

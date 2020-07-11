@@ -1,0 +1,19 @@
+@startuml
+abstract class	OP	 #red	
+OP	 --|> 	truth_andif_expr	
+cond_expr	 --|> 	OP	
+abstract class	type	 #red	
+type	 --|> 	integer_type	
+truth_andif_expr	 --|> 	type	
+OP	 --|> 	ne_expr	
+truth_andif_expr	 --|> 	OP	
+OP	 --|> 	truth_orif_expr	
+OP	 --|> 	le_expr	
+modify_expr	 --|> 	OP	
+OP	 --|> 	eq_expr	
+nop_expr	 --|> 	OP	
+OP	 --|> 	gt_expr	
+OP	 --|> 	nop_expr	
+truth_orif_expr	 --|> 	OP	
+OP	 --|> 	lt_expr	
+@enduml

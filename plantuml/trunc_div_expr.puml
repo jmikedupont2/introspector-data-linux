@@ -1,0 +1,23 @@
+@startuml
+abstract class	OP	 #red	
+OP	 --|> 	trunc_div_expr	
+save_expr	 --|> 	OP	
+nop_expr	 --|> 	OP	
+abstract class	type	 #red	
+type	 --|> 	integer_type	
+trunc_div_expr	 --|> 	type	
+OP	 --|> 	parm_decl	
+trunc_div_expr	 --|> 	OP	
+OP	 --|> 	integer_cst	
+OP	 --|> 	nop_expr	
+modify_expr	 --|> 	OP	
+OP	 --|> 	plus_expr	
+lt_expr	 --|> 	OP	
+OP	 --|> 	call_expr	
+abstract class	E	 #red	
+E	 --|> 	trunc_div_expr	
+call_expr	 --|> 	E	
+mult_expr	 --|> 	OP	
+convert_expr	 --|> 	OP	
+OP	 --|> 	component_ref	
+@enduml

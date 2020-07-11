@@ -1,0 +1,20 @@
+@startuml
+abstract class	OP	 #red	
+OP	 --|> 	result_decl	
+modify_expr	 --|> 	OP	
+abstract class	type	 #red	
+type	 --|> 	integer_type	
+result_decl	 --|> 	type	
+abstract class	scpe	 #red	
+scpe	 --|> 	function_decl	
+result_decl	 --|> 	scpe	
+abstract class	size	 #red	
+size	 --|> 	integer_cst	
+result_decl	 --|> 	size	
+type	 --|> 	pointer_type	
+type	 --|> 	boolean_type	
+type	 --|> 	real_type	
+abstract class	value	 #red	
+value	 --|> 	result_decl	
+integer_cst	 --|> 	value	
+@enduml

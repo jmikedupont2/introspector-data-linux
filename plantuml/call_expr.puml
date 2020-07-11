@@ -1,0 +1,66 @@
+@startuml
+abstract class	OP	 #red	
+OP	 --|> 	call_expr	
+nop_expr	 --|> 	OP	
+abstract class	type	 #red	
+type	 --|> 	integer_type	
+call_expr	 --|> 	type	
+abstract class	fn	 #red	
+fn	 --|> 	addr_expr	
+call_expr	 --|> 	fn	
+abstract class	E	 #red	
+E	 --|> 	nop_expr	
+call_expr	 --|> 	E	
+E	 --|> 	parm_decl	
+E	 --|> 	call_expr	
+statement_list	 --|> 	E	
+modify_expr	 --|> 	OP	
+type	 --|> 	pointer_type	
+E	 --|> 	integer_cst	
+ne_expr	 --|> 	OP	
+eq_expr	 --|> 	OP	
+lt_expr	 --|> 	OP	
+cond_expr	 --|> 	OP	
+E	 --|> 	ge_expr	
+gt_expr	 --|> 	OP	
+type	 --|> 	void_type	
+le_expr	 --|> 	OP	
+abstract class	body	 #red	
+body	 --|> 	call_expr	
+bind_expr	 --|> 	body	
+E	 --|> 	component_ref	
+type	 --|> 	real_type	
+convert_expr	 --|> 	OP	
+E	 --|> 	var_decl	
+E	 --|> 	addr_expr	
+E	 --|> 	convert_expr	
+abstract class	init	 #red	
+init	 --|> 	call_expr	
+var_decl	 --|> 	init	
+fn	 --|> 	parm_decl	
+E	 --|> 	eq_expr	
+type	 --|> 	boolean_type	
+trunc_div_expr	 --|> 	OP	
+E	 --|> 	trunc_div_expr	
+E	 --|> 	indirect_ref	
+abstract class	value	 #red	
+value	 --|> 	call_expr	
+integer_cst	 --|> 	value	
+abstract class	expr	 #red	
+expr	 --|> 	call_expr	
+return_expr	 --|> 	expr	
+fn	 --|> 	component_ref	
+indirect_ref	 --|> 	OP	
+E	 --|> 	ne_expr	
+truth_not_expr	 --|> 	OP	
+E	 --|> 	pointer_plus_expr	
+E	 --|> 	minus_expr	
+E	 --|> 	mult_expr	
+E	 --|> 	array_ref	
+E	 --|> 	plus_expr	
+E	 --|> 	bit_and_expr	
+E	 --|> 	postincrement_expr	
+E	 --|> 	cond_expr	
+plus_expr	 --|> 	OP	
+save_expr	 --|> 	OP	
+@enduml

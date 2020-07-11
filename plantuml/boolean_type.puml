@@ -1,0 +1,37 @@
+@startuml
+abstract class	retn	 #red	
+retn	 --|> 	boolean_type	
+function_type	 --|> 	retn	
+abstract class	name	 #red	
+name	 --|> 	type_decl	
+boolean_type	 --|> 	name	
+abstract class	size	 #red	
+size	 --|> 	integer_cst	
+boolean_type	 --|> 	size	
+abstract class	type	 #red	
+type	 --|> 	boolean_type	
+type_decl	 --|> 	type	
+modify_expr	 --|> 	type	
+result_decl	 --|> 	type	
+ne_expr	 --|> 	type	
+abstract class	valu	 #red	
+valu	 --|> 	boolean_type	
+tree_list	 --|> 	valu	
+eq_expr	 --|> 	type	
+integer_cst	 --|> 	type	
+call_expr	 --|> 	type	
+var_decl	 --|> 	type	
+field_decl	 --|> 	type	
+parm_decl	 --|> 	type	
+component_ref	 --|> 	type	
+nop_expr	 --|> 	type	
+truth_not_expr	 --|> 	type	
+abstract class	ptd	 #red	
+ptd	 --|> 	boolean_type	
+pointer_type	 --|> 	ptd	
+abstract class	unql	 #red	
+unql	 --|> 	boolean_type	
+boolean_type	 --|> 	unql	
+le_expr	 --|> 	type	
+ge_expr	 --|> 	type	
+@enduml

@@ -1,0 +1,51 @@
+@startuml
+abstract class	OP	 #red	
+OP	 --|> 	component_ref	
+ge_expr	 --|> 	OP	
+abstract class	type	 #red	
+type	 --|> 	pointer_type	
+component_ref	 --|> 	type	
+OP	 --|> 	indirect_ref	
+component_ref	 --|> 	OP	
+OP	 --|> 	field_decl	
+postincrement_expr	 --|> 	OP	
+modify_expr	 --|> 	OP	
+abstract class	E	 #red	
+E	 --|> 	component_ref	
+call_expr	 --|> 	E	
+OP	 --|> 	var_decl	
+indirect_ref	 --|> 	OP	
+addr_expr	 --|> 	OP	
+type	 --|> 	array_type	
+abstract class	init	 #red	
+init	 --|> 	component_ref	
+var_decl	 --|> 	init	
+nop_expr	 --|> 	OP	
+eq_expr	 --|> 	OP	
+ne_expr	 --|> 	OP	
+bit_and_expr	 --|> 	OP	
+type	 --|> 	integer_type	
+type	 --|> 	record_type	
+minus_expr	 --|> 	OP	
+type	 --|> 	boolean_type	
+convert_expr	 --|> 	OP	
+array_ref	 --|> 	OP	
+mult_expr	 --|> 	OP	
+gt_expr	 --|> 	OP	
+pointer_plus_expr	 --|> 	OP	
+abstract class	fn	 #red	
+fn	 --|> 	component_ref	
+call_expr	 --|> 	fn	
+truth_not_expr	 --|> 	OP	
+le_expr	 --|> 	OP	
+lt_expr	 --|> 	OP	
+plus_expr	 --|> 	OP	
+OP	 --|> 	array_ref	
+save_expr	 --|> 	OP	
+trunc_div_expr	 --|> 	OP	
+type	 --|> 	enumeral_type	
+type	 --|> 	real_type	
+abstract class	cond	 #red	
+cond	 --|> 	component_ref	
+switch_expr	 --|> 	cond	
+@enduml

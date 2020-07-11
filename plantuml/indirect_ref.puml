@@ -1,0 +1,37 @@
+@startuml
+abstract class	OP	 #red	
+OP	 --|> 	indirect_ref	
+modify_expr	 --|> 	OP	
+abstract class	type	 #red	
+type	 --|> 	integer_type	
+indirect_ref	 --|> 	type	
+OP	 --|> 	nop_expr	
+indirect_ref	 --|> 	OP	
+component_ref	 --|> 	OP	
+OP	 --|> 	postincrement_expr	
+type	 --|> 	record_type	
+OP	 --|> 	parm_decl	
+OP	 --|> 	component_ref	
+OP	 --|> 	var_decl	
+type	 --|> 	pointer_type	
+OP	 --|> 	pointer_plus_expr	
+bit_ior_expr	 --|> 	OP	
+bit_and_expr	 --|> 	OP	
+nop_expr	 --|> 	OP	
+bit_xor_expr	 --|> 	OP	
+abstract class	init	 #red	
+init	 --|> 	indirect_ref	
+var_decl	 --|> 	init	
+rshift_expr	 --|> 	OP	
+abstract class	E	 #red	
+E	 --|> 	indirect_ref	
+call_expr	 --|> 	E	
+OP	 --|> 	call_expr	
+eq_expr	 --|> 	OP	
+ne_expr	 --|> 	OP	
+bit_not_expr	 --|> 	OP	
+negate_expr	 --|> 	OP	
+type	 --|> 	union_type	
+postincrement_expr	 --|> 	OP	
+bit_field_ref	 --|> 	OP	
+@enduml

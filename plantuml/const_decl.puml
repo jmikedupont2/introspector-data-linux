@@ -1,0 +1,23 @@
+@startuml
+abstract class	chain	 #red	
+chain	 --|> 	const_decl	
+type_decl	 --|> 	chain	
+abstract class	name	 #red	
+name	 --|> 	identifier_node	
+const_decl	 --|> 	name	
+abstract class	type	 #red	
+type	 --|> 	enumeral_type	
+const_decl	 --|> 	type	
+abstract class	scpe	 #red	
+scpe	 --|> 	translation_unit_decl	
+const_decl	 --|> 	scpe	
+const_decl	 --|> 	chain	
+abstract class	cnst	 #red	
+cnst	 --|> 	integer_cst	
+const_decl	 --|> 	cnst	
+chain	 --|> 	type_decl	
+abstract class	value	 #red	
+value	 --|> 	const_decl	
+integer_cst	 --|> 	value	
+chain	 --|> 	function_decl	
+@enduml

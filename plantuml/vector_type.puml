@@ -1,0 +1,17 @@
+@startuml
+abstract class	valu	 #red	
+valu	 --|> 	vector_type	
+tree_list	 --|> 	valu	
+abstract class	retn	 #red	
+retn	 --|> 	vector_type	
+function_type	 --|> 	retn	
+abstract class	size	 #red	
+size	 --|> 	integer_cst	
+vector_type	 --|> 	size	
+abstract class	ptd	 #red	
+ptd	 --|> 	vector_type	
+pointer_type	 --|> 	ptd	
+abstract class	unql	 #red	
+unql	 --|> 	vector_type	
+vector_type	 --|> 	unql	
+@enduml

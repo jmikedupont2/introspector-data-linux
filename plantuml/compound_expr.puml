@@ -1,0 +1,16 @@
+@startuml
+abstract class	E	 #red	
+E	 --|> 	compound_expr	
+statement_list	 --|> 	E	
+abstract class	type	 #red	
+type	 --|> 	pointer_type	
+compound_expr	 --|> 	type	
+abstract class	OP	 #red	
+OP	 --|> 	modify_expr	
+compound_expr	 --|> 	OP	
+OP	 --|> 	postincrement_expr	
+type	 --|> 	integer_type	
+OP	 --|> 	save_expr	
+OP	 --|> 	compound_expr	
+cond_expr	 --|> 	OP	
+@enduml

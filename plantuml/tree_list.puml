@@ -1,0 +1,32 @@
+@startuml
+abstract class	prms	 #red	
+prms	 --|> 	tree_list	
+function_type	 --|> 	prms	
+abstract class	valu	 #red	
+valu	 --|> 	real_type	
+tree_list	 --|> 	valu	
+abstract class	chan	 #red	
+chan	 --|> 	tree_list	
+tree_list	 --|> 	chan	
+valu	 --|> 	void_type	
+valu	 --|> 	integer_type	
+abstract class	csts	 #red	
+csts	 --|> 	tree_list	
+enumeral_type	 --|> 	csts	
+abstract class	purp	 #red	
+purp	 --|> 	identifier_node	
+tree_list	 --|> 	purp	
+valu	 --|> 	integer_cst	
+valu	 --|> 	pointer_type	
+valu	 --|> 	boolean_type	
+abstract class	value	 #red	
+value	 --|> 	tree_list	
+integer_cst	 --|> 	value	
+valu	 --|> 	union_type	
+valu	 --|> 	record_type	
+valu	 --|> 	enumeral_type	
+valu	 --|> 	pointer_bounds_type	
+valu	 --|> 	complex_type	
+valu	 --|> 	vector_type	
+valu	 --|> 	reference_type	
+@enduml

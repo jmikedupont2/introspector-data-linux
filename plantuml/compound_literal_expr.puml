@@ -1,0 +1,8 @@
+@startuml
+abstract class	OP	 #red	
+OP	 --|> 	compound_literal_expr	
+modify_expr	 --|> 	OP	
+abstract class	type	 #red	
+type	 --|> 	record_type	
+compound_literal_expr	 --|> 	type	
+@enduml

@@ -73,3 +73,27 @@ Extract the most common one:
 
 `grep "\"_type\": \"identifier_node__stringstring_identifier_node__string_lenpythonint" expanded_data.json | sort -u > indentifiers.txt`
 grep "\"_type\": \"identifier_node__stringstring_identifier_node__string_lenpythonint" expanded_data.json| jq ._string  -r | sort -u > names.txt
+
+
+###
+
+We want to show a matrix of types, connected by fields.
+
+```
+python3 prepare_features_4.py | sort -n -k4 > prepare_features_4.txt
+sort -k 2 -k 1 -k3 prepare_features_4.txt  > prepare_features_4_by_field.txt 
+```
+
+```
+python3 ./prepare_features_5.py | sort -n -k4 > prepare_features_5.txt
+sort -k 2 -k 1 -k3 prepare_features_5.txt  > prepare_features_5_by_field.txt 
+```
+
+
+scpe is reversed, so the domain is what is scoped, the range is the scope.
+
+Starting with translation unit, we have scoped items that are decls,
+each decl has sub-scoped items.
+
+
+chain is the link between decls.

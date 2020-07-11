@@ -1,0 +1,33 @@
+@startuml
+abstract class	type	 #red	
+type	 --|> 	array_type	
+type_decl	 --|> 	type	
+abstract class	name	 #red	
+name	 --|> 	type_decl	
+array_type	 --|> 	name	
+abstract class	unql	 #red	
+unql	 --|> 	array_type	
+array_type	 --|> 	unql	
+abstract class	size	 #red	
+size	 --|> 	integer_cst	
+array_type	 --|> 	size	
+abstract class	elts	 #red	
+elts	 --|> 	record_type	
+array_type	 --|> 	elts	
+abstract class	domn	 #red	
+domn	 --|> 	integer_type	
+array_type	 --|> 	domn	
+field_decl	 --|> 	type	
+elts	 --|> 	integer_type	
+elts	 --|> 	pointer_type	
+abstract class	ptd	 #red	
+ptd	 --|> 	array_type	
+pointer_type	 --|> 	ptd	
+string_cst	 --|> 	type	
+var_decl	 --|> 	type	
+component_ref	 --|> 	type	
+abstract class	value	 #red	
+value	 --|> 	array_type	
+integer_cst	 --|> 	value	
+elts	 --|> 	array_type	
+@enduml

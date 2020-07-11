@@ -1,0 +1,14 @@
+@startuml
+abstract class	E	 #red	
+E	 --|> 	case_label_expr	
+statement_list	 --|> 	E	
+abstract class	type	 #red	
+type	 --|> 	void_type	
+case_label_expr	 --|> 	type	
+abstract class	name	 #red	
+name	 --|> 	label_decl	
+case_label_expr	 --|> 	name	
+abstract class	low	 #red	
+low	 --|> 	integer_cst	
+case_label_expr	 --|> 	low	
+@enduml

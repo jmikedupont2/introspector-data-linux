@@ -1,0 +1,21 @@
+@startuml
+abstract class	OP	 #red	
+OP	 --|> 	postincrement_expr	
+indirect_ref	 --|> 	OP	
+abstract class	type	 #red	
+type	 --|> 	pointer_type	
+postincrement_expr	 --|> 	type	
+OP	 --|> 	component_ref	
+postincrement_expr	 --|> 	OP	
+OP	 --|> 	integer_cst	
+nop_expr	 --|> 	OP	
+OP	 --|> 	var_decl	
+abstract class	E	 #red	
+E	 --|> 	postincrement_expr	
+statement_list	 --|> 	E	
+type	 --|> 	integer_type	
+call_expr	 --|> 	E	
+mult_expr	 --|> 	OP	
+OP	 --|> 	indirect_ref	
+compound_expr	 --|> 	OP	
+@enduml

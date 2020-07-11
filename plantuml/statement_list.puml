@@ -1,0 +1,30 @@
+@startuml
+abstract class	body	 #red	
+body	 --|> 	statement_list	
+bind_expr	 --|> 	body	
+abstract class	E	 #red	
+E	 --|> 	switch_expr	
+statement_list	 --|> 	E	
+E	 --|> 	label_expr	
+switch_expr	 --|> 	body	
+E	 --|> 	case_label_expr	
+E	 --|> 	modify_expr	
+E	 --|> 	goto_expr	
+E	 --|> 	asm_expr	
+E	 --|> 	call_expr	
+E	 --|> 	cond_expr	
+E	 --|> 	return_expr	
+abstract class	OP	 #red	
+OP	 --|> 	statement_list	
+cond_expr	 --|> 	OP	
+E	 --|> 	target_expr	
+E	 --|> 	decl_expr	
+E	 --|> 	bind_expr	
+E	 --|> 	predecrement_expr	
+E	 --|> 	postincrement_expr	
+E	 --|> 	convert_expr	
+E	 --|> 	predict_expr	
+E	 --|> 	postdecrement_expr	
+E	 --|> 	preincrement_expr	
+E	 --|> 	compound_expr	
+@enduml

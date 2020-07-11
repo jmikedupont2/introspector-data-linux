@@ -1,0 +1,38 @@
+@startuml
+abstract class	OP	 #red	
+OP	 --|> 	ne_expr	
+modify_expr	 --|> 	OP	
+abstract class	type	 #red	
+type	 --|> 	boolean_type	
+ne_expr	 --|> 	type	
+OP	 --|> 	call_expr	
+ne_expr	 --|> 	OP	
+OP	 --|> 	integer_cst	
+truth_andif_expr	 --|> 	OP	
+type	 --|> 	integer_type	
+cond_expr	 --|> 	OP	
+truth_orif_expr	 --|> 	OP	
+OP	 --|> 	bit_and_expr	
+OP	 --|> 	component_ref	
+OP	 --|> 	parm_decl	
+OP	 --|> 	var_decl	
+plus_expr	 --|> 	OP	
+abstract class	value	 #red	
+value	 --|> 	ne_expr	
+integer_cst	 --|> 	value	
+abstract class	E	 #red	
+E	 --|> 	ne_expr	
+call_expr	 --|> 	E	
+OP	 --|> 	nop_expr	
+OP	 --|> 	target_expr	
+abstract class	init	 #red	
+init	 --|> 	ne_expr	
+var_decl	 --|> 	init	
+OP	 --|> 	indirect_ref	
+OP	 --|> 	modify_expr	
+OP	 --|> 	pointer_plus_expr	
+OP	 --|> 	save_expr	
+OP	 --|> 	real_cst	
+OP	 --|> 	array_ref	
+OP	 --|> 	plus_expr	
+@enduml

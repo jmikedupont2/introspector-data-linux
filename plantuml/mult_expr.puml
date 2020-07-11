@@ -1,0 +1,27 @@
+@startuml
+abstract class	OP	 #red	
+OP	 --|> 	mult_expr	
+nop_expr	 --|> 	OP	
+abstract class	type	 #red	
+type	 --|> 	integer_type	
+mult_expr	 --|> 	type	
+OP	 --|> 	nop_expr	
+mult_expr	 --|> 	OP	
+OP	 --|> 	integer_cst	
+le_expr	 --|> 	OP	
+abstract class	init	 #red	
+init	 --|> 	mult_expr	
+var_decl	 --|> 	init	
+OP	 --|> 	parm_decl	
+gt_expr	 --|> 	OP	
+OP	 --|> 	var_decl	
+plus_expr	 --|> 	OP	
+OP	 --|> 	component_ref	
+abstract class	E	 #red	
+E	 --|> 	mult_expr	
+call_expr	 --|> 	E	
+OP	 --|> 	trunc_div_expr	
+OP	 --|> 	plus_expr	
+OP	 --|> 	postincrement_expr	
+modify_expr	 --|> 	OP	
+@enduml

@@ -1,0 +1,11 @@
+@startuml
+abstract class	E	 #red	
+E	 --|> 	asm_expr	
+statement_list	 --|> 	E	
+abstract class	type	 #red	
+type	 --|> 	void_type	
+asm_expr	 --|> 	type	
+abstract class	body	 #red	
+body	 --|> 	asm_expr	
+bind_expr	 --|> 	body	
+@enduml

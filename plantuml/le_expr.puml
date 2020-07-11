@@ -1,0 +1,22 @@
+@startuml
+abstract class	OP	 #red	
+OP	 --|> 	le_expr	
+cond_expr	 --|> 	OP	
+abstract class	type	 #red	
+type	 --|> 	integer_type	
+le_expr	 --|> 	type	
+OP	 --|> 	call_expr	
+le_expr	 --|> 	OP	
+OP	 --|> 	integer_cst	
+truth_andif_expr	 --|> 	OP	
+truth_orif_expr	 --|> 	OP	
+OP	 --|> 	parm_decl	
+OP	 --|> 	mult_expr	
+OP	 --|> 	bit_ior_expr	
+OP	 --|> 	var_decl	
+OP	 --|> 	component_ref	
+OP	 --|> 	nop_expr	
+OP	 --|> 	plus_expr	
+modify_expr	 --|> 	OP	
+type	 --|> 	boolean_type	
+@enduml

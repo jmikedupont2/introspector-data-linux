@@ -1,0 +1,17 @@
+@startuml
+abstract class	E	 #red	
+E	 --|> 	switch_expr	
+statement_list	 --|> 	E	
+abstract class	type	 #red	
+type	 --|> 	integer_type	
+switch_expr	 --|> 	type	
+abstract class	cond	 #red	
+cond	 --|> 	parm_decl	
+switch_expr	 --|> 	cond	
+abstract class	body	 #red	
+body	 --|> 	statement_list	
+switch_expr	 --|> 	body	
+cond	 --|> 	integer_cst	
+cond	 --|> 	component_ref	
+cond	 --|> 	nop_expr	
+@enduml

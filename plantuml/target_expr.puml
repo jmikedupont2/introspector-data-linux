@@ -1,0 +1,22 @@
+@startuml
+abstract class	E	 #red	
+E	 --|> 	target_expr	
+statement_list	 --|> 	E	
+abstract class	type	 #red	
+type	 --|> 	pointer_type	
+target_expr	 --|> 	type	
+abstract class	decl	 #red	
+decl	 --|> 	var_decl	
+target_expr	 --|> 	decl	
+abstract class	init	 #red	
+init	 --|> 	bind_expr	
+target_expr	 --|> 	init	
+abstract class	OP	 #red	
+OP	 --|> 	target_expr	
+nop_expr	 --|> 	OP	
+type	 --|> 	integer_type	
+modify_expr	 --|> 	OP	
+init	 --|> 	target_expr	
+var_decl	 --|> 	init	
+ne_expr	 --|> 	OP	
+@enduml

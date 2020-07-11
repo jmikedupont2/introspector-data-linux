@@ -1,0 +1,94 @@
+@startuml
+abstract class	chain	 #red	
+chain	 --|> 	var_decl	
+function_decl	 --|> 	chain	
+abstract class	name	 #red	
+name	 --|> 	identifier_node	
+var_decl	 --|> 	name	
+abstract class	type	 #red	
+type	 --|> 	pointer_type	
+var_decl	 --|> 	type	
+abstract class	scpe	 #red	
+scpe	 --|> 	translation_unit_decl	
+var_decl	 --|> 	scpe	
+var_decl	 --|> 	chain	
+abstract class	size	 #red	
+size	 --|> 	integer_cst	
+var_decl	 --|> 	size	
+chain	 --|> 	function_decl	
+abstract class	decl	 #red	
+decl	 --|> 	var_decl	
+target_expr	 --|> 	decl	
+type	 --|> 	array_type	
+abstract class	used	 #red	
+used	 --|> 	type_decl	
+var_decl	 --|> 	used	
+type_decl	 --|> 	chain	
+type	 --|> 	union_type	
+scpe	 --|> 	function_decl	
+abstract class	init	 #red	
+init	 --|> 	constructor	
+var_decl	 --|> 	init	
+abstract class	OP	 #red	
+OP	 --|> 	var_decl	
+modify_expr	 --|> 	OP	
+component_ref	 --|> 	OP	
+abstract class	E	 #red	
+E	 --|> 	var_decl	
+call_expr	 --|> 	E	
+abstract class	vars	 #red	
+vars	 --|> 	var_decl	
+bind_expr	 --|> 	vars	
+init	 --|> 	component_ref	
+indirect_ref	 --|> 	OP	
+eq_expr	 --|> 	OP	
+nop_expr	 --|> 	OP	
+ne_expr	 --|> 	OP	
+type	 --|> 	integer_type	
+init	 --|> 	integer_cst	
+plus_expr	 --|> 	OP	
+init	 --|> 	lshift_expr	
+init	 --|> 	pointer_plus_expr	
+bit_ior_expr	 --|> 	OP	
+bit_xor_expr	 --|> 	OP	
+bit_not_expr	 --|> 	OP	
+init	 --|> 	indirect_ref	
+bit_and_expr	 --|> 	OP	
+init	 --|> 	mult_expr	
+init	 --|> 	nop_expr	
+predecrement_expr	 --|> 	OP	
+init	 --|> 	call_expr	
+convert_expr	 --|> 	OP	
+postincrement_expr	 --|> 	OP	
+lt_expr	 --|> 	OP	
+gt_expr	 --|> 	OP	
+mult_expr	 --|> 	OP	
+init	 --|> 	parm_decl	
+init	 --|> 	string_cst	
+minus_expr	 --|> 	OP	
+addr_expr	 --|> 	OP	
+le_expr	 --|> 	OP	
+type	 --|> 	boolean_type	
+type	 --|> 	record_type	
+init	 --|> 	target_expr	
+chain	 --|> 	type_decl	
+array_ref	 --|> 	OP	
+lshift_expr	 --|> 	OP	
+pointer_plus_expr	 --|> 	OP	
+init	 --|> 	var_decl	
+min_expr	 --|> 	OP	
+init	 --|> 	ne_expr	
+chain	 --|> 	label_decl	
+ge_expr	 --|> 	OP	
+init	 --|> 	addr_expr	
+init	 --|> 	cond_expr	
+init	 --|> 	convert_expr	
+init	 --|> 	eq_expr	
+max_expr	 --|> 	OP	
+init	 --|> 	ge_expr	
+postdecrement_expr	 --|> 	OP	
+preincrement_expr	 --|> 	OP	
+type	 --|> 	real_type	
+type	 --|> 	enumeral_type	
+init	 --|> 	plus_expr	
+@enduml

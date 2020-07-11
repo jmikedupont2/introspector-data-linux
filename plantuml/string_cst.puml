@@ -1,0 +1,11 @@
+@startuml
+abstract class	OP	 #red	
+OP	 --|> 	string_cst	
+addr_expr	 --|> 	OP	
+abstract class	type	 #red	
+type	 --|> 	array_type	
+string_cst	 --|> 	type	
+abstract class	init	 #red	
+init	 --|> 	string_cst	
+var_decl	 --|> 	init	
+@enduml

@@ -1,0 +1,26 @@
+@startuml
+abstract class	OP	 #red	
+OP	 --|> 	array_ref	
+addr_expr	 --|> 	OP	
+abstract class	type	 #red	
+type	 --|> 	integer_type	
+array_ref	 --|> 	type	
+OP	 --|> 	component_ref	
+array_ref	 --|> 	OP	
+OP	 --|> 	plus_expr	
+modify_expr	 --|> 	OP	
+OP	 --|> 	parm_decl	
+eq_expr	 --|> 	OP	
+OP	 --|> 	integer_cst	
+nop_expr	 --|> 	OP	
+OP	 --|> 	var_decl	
+OP	 --|> 	nop_expr	
+component_ref	 --|> 	OP	
+type	 --|> 	record_type	
+abstract class	E	 #red	
+E	 --|> 	array_ref	
+call_expr	 --|> 	E	
+type	 --|> 	pointer_type	
+ne_expr	 --|> 	OP	
+OP	 --|> 	bit_and_expr	
+@enduml

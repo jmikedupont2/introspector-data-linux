@@ -1,0 +1,16 @@
+@startuml
+abstract class	OP	 #red	
+OP	 --|> 	save_expr	
+nop_expr	 --|> 	OP	
+abstract class	type	 #red	
+type	 --|> 	integer_type	
+save_expr	 --|> 	type	
+OP	 --|> 	trunc_div_expr	
+save_expr	 --|> 	OP	
+ne_expr	 --|> 	OP	
+type	 --|> 	pointer_type	
+OP	 --|> 	component_ref	
+compound_expr	 --|> 	OP	
+OP	 --|> 	call_expr	
+plus_expr	 --|> 	OP	
+@enduml

@@ -1,0 +1,11 @@
+@startuml
+abstract class	OP	 #red	
+OP	 --|> 	min_expr	
+nop_expr	 --|> 	OP	
+abstract class	type	 #red	
+type	 --|> 	integer_type	
+min_expr	 --|> 	type	
+OP	 --|> 	var_decl	
+min_expr	 --|> 	OP	
+OP	 --|> 	integer_cst	
+@enduml

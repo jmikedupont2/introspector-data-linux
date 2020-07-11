@@ -1,0 +1,19 @@
+@startuml
+abstract class	OP	 #red	
+OP	 --|> 	bit_ior_expr	
+modify_expr	 --|> 	OP	
+abstract class	type	 #red	
+type	 --|> 	integer_type	
+bit_ior_expr	 --|> 	type	
+OP	 --|> 	indirect_ref	
+bit_ior_expr	 --|> 	OP	
+OP	 --|> 	lshift_expr	
+OP	 --|> 	var_decl	
+OP	 --|> 	rshift_expr	
+le_expr	 --|> 	OP	
+gt_expr	 --|> 	OP	
+OP	 --|> 	parm_decl	
+nop_expr	 --|> 	OP	
+OP	 --|> 	nop_expr	
+OP	 --|> 	bit_and_expr	
+@enduml

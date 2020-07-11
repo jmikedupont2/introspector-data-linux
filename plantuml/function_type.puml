@@ -1,0 +1,36 @@
+@startuml
+abstract class	type	 #red	
+type	 --|> 	function_type	
+function_decl	 --|> 	type	
+abstract class	size	 #red	
+size	 --|> 	integer_cst	
+function_type	 --|> 	size	
+abstract class	retn	 #red	
+retn	 --|> 	real_type	
+function_type	 --|> 	retn	
+abstract class	prms	 #red	
+prms	 --|> 	tree_list	
+function_type	 --|> 	prms	
+retn	 --|> 	pointer_type	
+retn	 --|> 	integer_type	
+abstract class	ptd	 #red	
+ptd	 --|> 	function_type	
+pointer_type	 --|> 	ptd	
+abstract class	unql	 #red	
+unql	 --|> 	function_type	
+function_type	 --|> 	unql	
+retn	 --|> 	void_type	
+retn	 --|> 	boolean_type	
+retn	 --|> 	record_type	
+type_decl	 --|> 	type	
+abstract class	name	 #red	
+name	 --|> 	type_decl	
+function_type	 --|> 	name	
+retn	 --|> 	enumeral_type	
+abstract class	value	 #red	
+value	 --|> 	function_type	
+integer_cst	 --|> 	value	
+retn	 --|> 	pointer_bounds_type	
+retn	 --|> 	complex_type	
+retn	 --|> 	vector_type	
+@enduml

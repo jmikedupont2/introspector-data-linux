@@ -1,0 +1,14 @@
+@startuml
+abstract class	valu	 #red	
+valu	 --|> 	pointer_bounds_type	
+tree_list	 --|> 	valu	
+abstract class	name	 #red	
+name	 --|> 	identifier_node	
+pointer_bounds_type	 --|> 	name	
+abstract class	size	 #red	
+size	 --|> 	integer_cst	
+pointer_bounds_type	 --|> 	size	
+abstract class	retn	 #red	
+retn	 --|> 	pointer_bounds_type	
+function_type	 --|> 	retn	
+@enduml

@@ -1,0 +1,11 @@
+@startuml
+abstract class	OP	 #red	
+OP	 --|> 	lrotate_expr	
+nop_expr	 --|> 	OP	
+abstract class	type	 #red	
+type	 --|> 	integer_type	
+lrotate_expr	 --|> 	type	
+OP	 --|> 	nop_expr	
+lrotate_expr	 --|> 	OP	
+OP	 --|> 	integer_cst	
+@enduml

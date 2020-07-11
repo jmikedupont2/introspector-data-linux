@@ -1,0 +1,53 @@
+@startuml
+abstract class	name	 #red	
+name	 --|> 	identifier_node	
+type_decl	 --|> 	name	
+abstract class	type	 #red	
+type	 --|> 	integer_type	
+type_decl	 --|> 	type	
+abstract class	chain	 #red	
+chain	 --|> 	type_decl	
+type_decl	 --|> 	chain	
+name	 --|> 	type_decl	
+integer_type	 --|> 	name	
+abstract class	value	 #red	
+value	 --|> 	type_decl	
+integer_cst	 --|> 	value	
+type	 --|> 	real_type	
+real_type	 --|> 	name	
+type	 --|> 	complex_type	
+complex_type	 --|> 	name	
+type	 --|> 	void_type	
+void_type	 --|> 	name	
+type	 --|> 	array_type	
+array_type	 --|> 	name	
+type	 --|> 	pointer_type	
+record_type	 --|> 	name	
+pointer_type	 --|> 	name	
+chain	 --|> 	function_decl	
+type	 --|> 	record_type	
+abstract class	scpe	 #red	
+scpe	 --|> 	translation_unit_decl	
+type_decl	 --|> 	scpe	
+type	 --|> 	enumeral_type	
+chain	 --|> 	const_decl	
+const_decl	 --|> 	chain	
+enumeral_type	 --|> 	name	
+abstract class	used	 #red	
+used	 --|> 	type_decl	
+parm_decl	 --|> 	used	
+function_decl	 --|> 	chain	
+type	 --|> 	union_type	
+union_type	 --|> 	name	
+boolean_type	 --|> 	name	
+type	 --|> 	boolean_type	
+type	 --|> 	function_type	
+function_type	 --|> 	name	
+var_decl	 --|> 	used	
+abstract class	vars	 #red	
+vars	 --|> 	type_decl	
+bind_expr	 --|> 	vars	
+scpe	 --|> 	function_decl	
+chain	 --|> 	var_decl	
+var_decl	 --|> 	chain	
+@enduml

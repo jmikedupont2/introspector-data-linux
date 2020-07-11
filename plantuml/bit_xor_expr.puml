@@ -1,0 +1,11 @@
+@startuml
+abstract class	OP	 #red	
+OP	 --|> 	bit_xor_expr	
+modify_expr	 --|> 	OP	
+abstract class	type	 #red	
+type	 --|> 	integer_type	
+bit_xor_expr	 --|> 	type	
+OP	 --|> 	indirect_ref	
+bit_xor_expr	 --|> 	OP	
+OP	 --|> 	var_decl	
+@enduml

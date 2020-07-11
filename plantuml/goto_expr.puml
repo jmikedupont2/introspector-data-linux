@@ -1,0 +1,14 @@
+@startuml
+abstract class	E	 #red	
+E	 --|> 	goto_expr	
+statement_list	 --|> 	E	
+abstract class	type	 #red	
+type	 --|> 	void_type	
+goto_expr	 --|> 	type	
+abstract class	labl	 #red	
+labl	 --|> 	label_decl	
+goto_expr	 --|> 	labl	
+abstract class	OP	 #red	
+OP	 --|> 	goto_expr	
+cond_expr	 --|> 	OP	
+@enduml

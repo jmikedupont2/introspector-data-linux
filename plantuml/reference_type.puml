@@ -1,0 +1,11 @@
+@startuml
+abstract class	valu	 #red	
+valu	 --|> 	reference_type	
+tree_list	 --|> 	valu	
+abstract class	size	 #red	
+size	 --|> 	integer_cst	
+reference_type	 --|> 	size	
+abstract class	refd	 #red	
+refd	 --|> 	pointer_type	
+reference_type	 --|> 	refd	
+@enduml

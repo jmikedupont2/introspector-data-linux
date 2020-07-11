@@ -1,0 +1,63 @@
+@startuml
+abstract class	type	 #red	
+type	 --|> 	pointer_type	
+type_decl	 --|> 	type	
+abstract class	name	 #red	
+name	 --|> 	type_decl	
+pointer_type	 --|> 	name	
+abstract class	size	 #red	
+size	 --|> 	integer_cst	
+pointer_type	 --|> 	size	
+abstract class	ptd	 #red	
+ptd	 --|> 	integer_type	
+pointer_type	 --|> 	ptd	
+field_decl	 --|> 	type	
+ptd	 --|> 	void_type	
+abstract class	retn	 #red	
+retn	 --|> 	pointer_type	
+function_type	 --|> 	retn	
+abstract class	unql	 #red	
+unql	 --|> 	pointer_type	
+pointer_type	 --|> 	unql	
+abstract class	elts	 #red	
+elts	 --|> 	pointer_type	
+array_type	 --|> 	elts	
+ptd	 --|> 	record_type	
+addr_expr	 --|> 	type	
+ptd	 --|> 	function_type	
+abstract class	valu	 #red	
+valu	 --|> 	pointer_type	
+tree_list	 --|> 	valu	
+ptd	 --|> 	pointer_type	
+parm_decl	 --|> 	type	
+abstract class	argt	 #red	
+argt	 --|> 	pointer_type	
+parm_decl	 --|> 	argt	
+modify_expr	 --|> 	type	
+call_expr	 --|> 	type	
+result_decl	 --|> 	type	
+nop_expr	 --|> 	type	
+var_decl	 --|> 	type	
+integer_cst	 --|> 	type	
+ptd	 --|> 	array_type	
+component_ref	 --|> 	type	
+postincrement_expr	 --|> 	type	
+target_expr	 --|> 	type	
+abstract class	value	 #red	
+value	 --|> 	pointer_type	
+integer_cst	 --|> 	value	
+indirect_ref	 --|> 	type	
+ptd	 --|> 	union_type	
+pointer_plus_expr	 --|> 	type	
+ptd	 --|> 	real_type	
+ptd	 --|> 	enumeral_type	
+ptd	 --|> 	vector_type	
+ptd	 --|> 	boolean_type	
+array_ref	 --|> 	type	
+cond_expr	 --|> 	type	
+save_expr	 --|> 	type	
+compound_expr	 --|> 	type	
+abstract class	refd	 #red	
+refd	 --|> 	pointer_type	
+reference_type	 --|> 	refd	
+@enduml

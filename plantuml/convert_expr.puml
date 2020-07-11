@@ -1,0 +1,30 @@
+@startuml
+abstract class	OP	 #red	
+OP	 --|> 	convert_expr	
+nop_expr	 --|> 	OP	
+abstract class	type	 #red	
+type	 --|> 	integer_type	
+convert_expr	 --|> 	type	
+OP	 --|> 	parm_decl	
+convert_expr	 --|> 	OP	
+modify_expr	 --|> 	OP	
+OP	 --|> 	call_expr	
+plus_expr	 --|> 	OP	
+abstract class	E	 #red	
+E	 --|> 	convert_expr	
+call_expr	 --|> 	E	
+OP	 --|> 	var_decl	
+minus_expr	 --|> 	OP	
+OP	 --|> 	component_ref	
+abstract class	body	 #red	
+body	 --|> 	convert_expr	
+bind_expr	 --|> 	body	
+type	 --|> 	void_type	
+cond_expr	 --|> 	OP	
+statement_list	 --|> 	E	
+OP	 --|> 	integer_cst	
+abstract class	init	 #red	
+init	 --|> 	convert_expr	
+var_decl	 --|> 	init	
+OP	 --|> 	trunc_div_expr	
+@enduml

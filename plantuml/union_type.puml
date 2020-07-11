@@ -1,0 +1,33 @@
+@startuml
+abstract class	type	 #red	
+type	 --|> 	union_type	
+type_decl	 --|> 	type	
+field_decl	 --|> 	type	
+abstract class	size	 #red	
+size	 --|> 	integer_cst	
+union_type	 --|> 	size	
+abstract class	flds	 #red	
+flds	 --|> 	field_decl	
+union_type	 --|> 	flds	
+abstract class	scpe	 #red	
+scpe	 --|> 	union_type	
+field_decl	 --|> 	scpe	
+abstract class	name	 #red	
+name	 --|> 	type_decl	
+union_type	 --|> 	name	
+abstract class	unql	 #red	
+unql	 --|> 	union_type	
+union_type	 --|> 	unql	
+name	 --|> 	identifier_node	
+var_decl	 --|> 	type	
+abstract class	valu	 #red	
+valu	 --|> 	union_type	
+tree_list	 --|> 	valu	
+abstract class	value	 #red	
+value	 --|> 	union_type	
+integer_cst	 --|> 	value	
+abstract class	ptd	 #red	
+ptd	 --|> 	union_type	
+pointer_type	 --|> 	ptd	
+indirect_ref	 --|> 	type	
+@enduml

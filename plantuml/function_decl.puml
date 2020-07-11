@@ -1,0 +1,40 @@
+@startuml
+abstract class	value	 #red	
+value	 --|> 	function_decl	
+integer_cst	 --|> 	value	
+abstract class	chain	 #red	
+chain	 --|> 	function_decl	
+type_decl	 --|> 	chain	
+abstract class	name	 #red	
+name	 --|> 	identifier_node	
+function_decl	 --|> 	name	
+abstract class	mngl	 #red	
+mngl	 --|> 	identifier_node	
+function_decl	 --|> 	mngl	
+abstract class	type	 #red	
+type	 --|> 	function_type	
+function_decl	 --|> 	type	
+abstract class	scpe	 #red	
+scpe	 --|> 	translation_unit_decl	
+function_decl	 --|> 	scpe	
+function_decl	 --|> 	chain	
+abstract class	args	 #red	
+args	 --|> 	parm_decl	
+function_decl	 --|> 	args	
+abstract class	body	 #red	
+body	 --|> 	bind_expr	
+function_decl	 --|> 	body	
+scpe	 --|> 	function_decl	
+parm_decl	 --|> 	scpe	
+result_decl	 --|> 	scpe	
+chain	 --|> 	type_decl	
+abstract class	OP	 #red	
+OP	 --|> 	function_decl	
+addr_expr	 --|> 	OP	
+label_decl	 --|> 	scpe	
+chain	 --|> 	var_decl	
+var_decl	 --|> 	chain	
+type_decl	 --|> 	scpe	
+var_decl	 --|> 	scpe	
+const_decl	 --|> 	chain	
+@enduml
