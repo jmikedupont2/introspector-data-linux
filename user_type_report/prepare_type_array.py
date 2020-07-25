@@ -9,6 +9,25 @@ identifier_field = "_id"
 type_field = "_type"
 
 known= [identifier_field,type_field]
+def record_type(node):
+    start = node['__type']['__type']
+    #pprint.pprint(node)
+
+    name = "unknown"
+    if '_string' in start:
+        name = start['_string']
+    else:
+        #print(node)
+        pass
+    ldata = None
+    if '__flds' in start :
+        if '_string' in start['__flds']:
+            ldata = start
+    data = {'struct':{
+        name : ldata
+    }}
+    print(data)
+    return data
 
 def enum_csts(node):
     #print("found")
@@ -31,46 +50,156 @@ def enum_csts(node):
     return data
     
 patterns = [
+    # {
+    #     'node_type': 'type_decl', # __type
+    #     'field': 'type',
+    #     'child':{
+    #         'node_type': 'enumeral_type',
+    #         'field': 'type',
+    #         'child': {
+    #             'node_type': 'tree_list',
+    #             'field': 'csts',
+    #             'function' :  enum_csts,
+    #         }
+    #     }
+    # },
+    # {
+    #     # match any node type
+    #     'field': 'type',
+    #     'child':{
+    #         'node_type': 'enumeral_type',
+    #         'field': 'type',
+    #         'child': {
+    #             'node_type': 'tree_list',
+    #             'field': 'csts',
+    #             'function' :  enum_csts,
+    #         }
+    #     }
+    # },
+
+    
+    # {
+    
+    #     'node_type': 'enumeral_type',
+    #     'field': 'type',
+    #     'child': {
+    #         'node_type': 'tree_list',
+    #         'field': 'csts',
+    #         'function' :  enum_csts,
+    #     }
+    # },
+
     {
-        'node_type': 'type_decl',
+        'node_type': 'type_decl', # __type
         'field': 'type',
         'child':{
-            'node_type': 'enumeral_type',
-            'field': 'type',
-            'child': {
-                'node_type': 'tree_list',
-                'field': 'csts',
-                'function' :  enum_csts,
-            }
+    
+            'node_type': 'record_type',
+            'function' : record_type,
         }
-    }   
+    }
+
+    
 ]
 
 def get_field(node, field):
     pass
 
+   #    1 bit_field_ref
+   #    1 float_expr
+   #    1 max_expr
+   #    1 min_expr
+   #    1 rdiv_expr
+   #    2 bit_xor_expr
+   #    2 lrotate_expr
+   #    2 predecrement_expr
+   #    2 preincrement_expr
+   #    2 real_cst
+   #    3 postdecrement_expr
+   #    4 negate_expr
+   #    5 bit_not_expr
+   #    7 switch_expr
+   #    8 compound_literal_expr
+   #   10 predict_expr
+   #   11 compound_expr
+   #   11 save_expr
+   #   11 trunc_mod_expr
+   #   12 ge_expr
+   #   13 truth_not_expr
+   #   15 asm_expr
+   #   19 minus_expr
+   #   24 trunc_div_expr
+   #   32 truth_orif_expr
+   #   34 bit_ior_expr
+   #   37 gt_expr
+   #   38 array_ref
+   #   38 le_expr
+   #   43 lshift_expr
+   #   48 truth_andif_expr
+   #   63 convert_expr
+   #   63 postincrement_expr
+   #   68 target_expr
+   #   71 mult_expr
+   #   71 pointer_plus_expr
+   #   80 rshift_expr
+   #   87 case_label_expr
+   #  143 lt_expr
+   #  154 bit_and_expr
+   #  179 plus_expr
+   #  228 eq_expr
+   #  255 string_cst
+   #  277 label_expr
+   #  360 result_decl
+   #  364 label_decl
+   #  380 goto_expr
+   #  434 ne_expr
+   #  575 decl_expr
+   #  577 bind_expr
+   #  668 cond_expr
+   #  697 return_expr
+   #  723 var_decl
+   #  902 parm_decl
+   # 1080 type_decl
+   # 1103 integer_cst
+   # 1105 indirect_ref
+   # 1193 call_expr
+   # 1294 component_ref
+   # 1402 const_decl
+   # 1457 nop_expr
+   # 1462 modify_expr
+   # 1922 addr_expr
+   # 2620 field_decl
+   # 4074 function_decl
+   
 def match_patterns_2(node, pattern):
+
+    
     ntype = node['_type']
-    ctype = pattern['node_type']
-    if ntype == ctype :
+    if 'node_type' in pattern :
+        ctype = pattern['node_type']        
+        if ntype != ctype :
+            #print(ntype)
+            return None # no match
+
+    if 'field' in pattern:
         cfield = "__" + pattern['field']
-        if cfield in node:
-            
+        if cfield in node:            
             if 'child' in pattern:
                 child = pattern['child']
                 node2 = node[cfield]
+                #import pdb
+                #pdb.set_trace()
+
+                ntype2 = node2['_type']
+                #print(ntype,ntype2)
+                
                 res = match_patterns_2(node2, child)
                 if res :
                     return res
-            elif 'function' in pattern:
-                return pattern['function'] # call that
-            else:
-                raise Exception("no match")
-        else:
-            print("missing", cfield)
-    else:
-        #print(ntype,ctype)
-        pass
+
+    if 'function' in pattern:
+        return pattern['function'] # call that
+
     return False                    
                 
 
@@ -82,7 +211,6 @@ def match_patterns(node):
 
 # all nodes
 data = {}
-
 
 # what type node id maps to what node id
 types = {}
@@ -150,7 +278,11 @@ with open("../linux_clean_formatted_compact.json") as fi:
         # now reverse
         for f in collect_reverse:
             if f in row:
-                collected[f + "_rev"][row[f]] = _id
+                v = row[f]
+                if v in collected[f + "_rev"]:
+                    collected[f + "_rev"][v].append( _id)
+                else:
+                    collected[f + "_rev"][v] = [ _id ]
 
 counter=collections.Counter()
 
@@ -279,7 +411,18 @@ def myreduce2(item):
 
 def doset(item, field, child):
     #print("resolve",item,field,child)
-    item["__" + field] = child
+    fname = "__" + field
+
+    if fname not in item :        
+        item[fname] = child
+    else:
+        old = item[fname]
+        # convert to a list or append to the list
+        if isinstance(old,list):
+            old.append( child)
+        else:
+            item[fname] = [old, child]
+            
     return item
     #print("resolve",item)
 
@@ -381,17 +524,28 @@ def process_graph(start_gen, lookup_fields):
                                 #print("Chain", value2)
                                 value2 = collected[fieldname2][value2]
                     else:
-                        if value2 not in seen:
-                            seen[nextid]=1
-                            #print("next item", nextid, fieldname2, value2)
-                            queue.append({
-                                'started': item,
-                                #'viaf': field,
-                                'from': value2,
-                                #'val': value2,
-                                'field': fieldname2,
-                                'resolve' : doset,
-                            })
+                        if isinstance(value2, list):
+                            for v in value2:
+                                if v not in seen:
+                                    seen[v]=1
+                                    queue.append({
+                                        'started': item,
+                                        'from': v,
+                                        'field': fieldname2,
+                                        'resolve' : doset,
+                                    })
+                        else:
+                            if value2 not in seen:
+                                seen[nextid]=1
+                                #print("next item", nextid, fieldname2, value2)
+                                queue.append({
+                                    'started': item,
+                                    #'viaf': field,
+                                    'from': value2,
+                                    #'val': value2,
+                                    'field': fieldname2,
+                                    'resolve' : doset,
+                                })
             fn = item['resolve']
             st = item['started']
             del item['started']
@@ -424,6 +578,9 @@ def simple():
 
 def visit(x):
     ret = {}
+    if isinstance(x,list):
+        return [ visit(y) for y in x]
+    
     for f in x :
         if f in ("_string",'_type'):
             ret[f] = x[f]
@@ -455,12 +612,36 @@ def visitchain(x):
 #         elif f.startswith("__"):
 #             ret[f] = visit(x[f])
 #     return ret
+def abstract(n, ret={}):
+    if n is None :
+        return "None"
+    for x in n:        
+        v = n[x]
+        if x == '__csts':
+            ret[x] = "CONSTANTS"
 
+        elif isinstance(v,dict):
+            ret[x] = abstract(v, {})
+        elif isinstance(v,list):
+            n = {}
+            #ret[x] = [ abstract(y, n) for y in v]
+            ret[x] = "list"
+        elif x == '_type':
+            ret['___type'] = v
+        else:
+            ret[x] = str(type(v))
+            
+    return ret
+    
 for x in process_graph(generate_ids, my_lookup_fields):
     y = visit(x)
     data = match_patterns(y)
     if data :
-        print(data)
+        #print(data)
+        pass
+    else:
+        #print(json.dumps(abstract(y)))
+        pass
     #pprint.pprint()
     #json.dump(visit(x),sys.stdout)
     #json.dump(x,sys.stdout)
