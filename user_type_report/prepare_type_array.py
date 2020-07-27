@@ -9,6 +9,7 @@ opt_collect_normal=True
 FIELDS='__scpe_rev'
 
 usage = collections.Counter()
+type_usage = collections.Counter()
 
 identifier_field = "_id"
 type_field = "_type"
@@ -321,6 +322,101 @@ with open("../linux_clean_formatted_compact.json") as fi:
                     collected[target_field][v] = [ _id ]
 
     #pprint.pprint(collected)
+for x in usage.most_common():
+    if x[0] not in data:
+        continue
+    ntype = "unknown"
+    if '_type' in data[x[0]]:
+        ntype = data[x[0]]['_type']
+    type_usage[ntype] += x[1]
+    #print(ntype,x)
+    
+#for x in type_usage.most_common():
+#    print(x)
+# ('identifier_node', 20289)
+# ('tree_list', 13161)
+# ('integer_type', 11376)
+# ('pointer_type', 10337)
+# ('function_type', 6399)
+# ('function_decl', 6353)
+# ('translation_unit_decl', 6217)
+# ('record_type', 5483)
+# ('void_type', 4124)
+# ('field_decl', 2663)
+# ('integer_cst', 2610)
+# ('addr_expr', 1923)
+# ('enumeral_type', 1796)
+# ('type_decl', 1700)
+# ('modify_expr', 1467)
+# ('nop_expr', 1459)
+# ('const_decl', 1406)
+# ('parm_decl', 1358)
+# ('component_ref', 1294)
+# ('call_expr', 1198)
+# ('indirect_ref', 1105)
+# ('array_type', 883)
+# ('label_decl', 728)
+# ('var_decl', 723)
+# ('return_expr', 701)
+# ('cond_expr', 668)
+# ('bind_expr', 581)
+# ('decl_expr', 575)
+# ('boolean_type', 542)
+# ('union_type', 527)
+# ('statement_list', 470)
+# ('ne_expr', 435)
+# ('goto_expr', 380)
+# ('result_decl', 365)
+# ('label_expr', 277)
+# ('real_type', 267)
+# ('string_cst', 255)
+# ('eq_expr', 229)
+# ('plus_expr', 180)
+# ('vector_type', 178)
+# ('bit_and_expr', 155)
+# ('lt_expr', 143)
+# ('case_label_expr', 87)
+# ('rshift_expr', 80)
+# ('pointer_plus_expr', 71)
+# ('mult_expr', 71)
+# ('target_expr', 68)
+# ('convert_expr', 63)
+# ('postincrement_expr', 63)
+# ('complex_type', 57)
+# ('constructor', 49)
+# ('truth_andif_expr', 48)
+# ('lshift_expr', 43)
+# ('le_expr', 38)
+# ('array_ref', 38)
+# ('gt_expr', 37)
+# ('bit_ior_expr', 34)
+# ('truth_orif_expr', 32)
+# ('trunc_div_expr', 24)
+# ('minus_expr', 19)
+# ('asm_expr', 15)
+# ('truth_not_expr', 13)
+# ('ge_expr', 12)
+# ('trunc_mod_expr', 11)
+# ('save_expr', 11)
+# ('compound_expr', 11)
+# ('predict_expr', 10)
+# ('compound_literal_expr', 8)
+# ('switch_expr', 7)
+# ('pointer_bounds_type', 6)
+# ('bit_not_expr', 5)
+# ('reference_type', 4)
+# ('negate_expr', 4)
+# ('postdecrement_expr', 3)
+# ('bit_xor_expr', 2)
+# ('predecrement_expr', 2)
+# ('lrotate_expr', 2)
+# ('real_cst', 2)
+# ('preincrement_expr', 2)
+# ('min_expr', 1)
+# ('max_expr', 1)
+# ('rdiv_expr', 1)
+# ('float_expr', 1)
+# ('bit_field_ref', 1)
 
 counter=collections.Counter()
 
@@ -789,15 +885,24 @@ def abstract(node, ret={}):
             ret[field_name] = str(type(value))
             
     return ret
-    
+
+# def collect_usage(x):
+#     usage = 0
+#     for f in x:
+#         if '_data' in f[x]:
+#             if '_id' in f[x]['_data']:
+#                 usage += usage[f[x]['_data']['_id']]
+#         usage += collect_usage(
+            
 for x in process_graph(generate_ids, my_lookup_fields):
     y = visit(x)
-    data = match_patterns(y)
-    if data :
-        #print(data)
-        
+    data2 = match_patterns(y)
+    if data2 :                
+        if x:
+            usage = collect_usage(x)
+            data2['usage'] = usage
         #print(json.dumps(abstract(data)))
-        print(json.dumps(data))
+        print(json.dumps(data2))
     else:
         #print(json.dumps(abstract(y)))
         pass
