@@ -5,13 +5,17 @@ import pandas as pd
 import numpy as np
 import sys
 
+opt_collect_normal=True
+FIELDS='__scpe_rev'
+
+usage = collections.Counter()
+
 identifier_field = "_id"
 type_field = "_type"
 
 known= [identifier_field,type_field]
 def record_type(node):
     start = node['__type']['__type']
-    #pprint.pprint(node)
 
     name = "unknown"
     if '_string' in start:
@@ -20,14 +24,18 @@ def record_type(node):
         #print(node)
         pass
     ldata = None
-    if '__flds' in start :
-        if '_string' in start['__flds']:
-            ldata = start
-    data = {'struct':{
-        name : ldata
-    }}
-    print(data)
-    return data
+    if FIELDS in start :
+        
+        #print( [ x for x in start[FIELDS] ] )
+        data = {'struct':{
+            'name': name,
+            'fields' : {
+                x["_string"]: "TODO" for x in start[FIELDS] 
+            }
+        }}
+
+        return data
+    return node
 
 def enum_csts(node):
     #print("found")
@@ -222,7 +230,7 @@ fields = {
 
 collect_fields = {
     'type' : 1,
-    'flds' : 1, # fields, 
+#    'flds' : 1, # fields, 
     'chan' : 1,
 
     'csts' : 1, # enum constants, list 
@@ -243,16 +251,32 @@ collect_fields = {
     'purp' : 1,
 }
 
+# each of these fields creates a field in the holder of them
 collect_reverse = {
-    'scpe' : 1, # scope
-
+    'scpe' : {
+        "result_decl" : "result", # only one...
+        "const_decl" : "enums", # the constants of an enums
+        "parm_decl" : "params",
+        "field_decl" : "flds",
+        "type_decl" : "types",
+        "var_decl" : "vars",
+        "function_decl" : "funcs",
+        "label_decl" : "labels"
+    }
 }
+reverse_fields = {}
 
 collected = {}
 for f in collect_fields:
     collected[f] = {}
+
+    
 for f in collect_reverse:
-    collected[f + "_rev"] = {}
+    # renaming the fields based on type
+    for t in collect_reverse[f]:
+        fn2 = collect_reverse[f][t]
+        reverse_fields[fn2] = t
+        collected[fn2] = {}
 
 
 
@@ -262,27 +286,41 @@ with open("../linux_clean_formatted_compact.json") as fi:
         row = json.loads(li)
         type_name = row[type_field]
         _id = row[identifier_field]
-        
+        usage[_id] += 1
         # save the row for second pass
         data[_id] = dict(row)
 
-        for f in row:
-            if f not in collect_fields:
-                if f not in collect_reverse:
-                    fields[f] =1
-                    
-        for f in collect_fields:
-            if f in row:
-                collected[f][_id] = row[f]
+        # for f in row:
+        #     if f not in collect_fields:
+        #         if f not in collect_reverse:
+        #             fields[f] =1
+        if opt_collect_normal:
+            for f in collect_fields:
+                if f in row:
+                    v = row[f]
+                    collected[f][_id] = row[f]
+                    usage[v] += 1
 
         # now reverse
         for f in collect_reverse:
             if f in row:
-                v = row[f]
-                if v in collected[f + "_rev"]:
-                    collected[f + "_rev"][v].append( _id)
+
+                if type_name not in collect_reverse[f]:
+                    target_field = "rev_"+ type_name
+                    collect_reverse[f][t] = target_field
+                    if target_field not in collected:
+                        collected[target_field] = {}
                 else:
-                    collected[f + "_rev"][v] = [ _id ]
+                    target_field = collect_reverse[f][type_name]
+
+                v = row[f]
+                usage[v] += 1
+                if v in collected[target_field]:
+                    collected[target_field][v].append( _id)
+                else:
+                    collected[target_field][v] = [ _id ]
+
+    #pprint.pprint(collected)
 
 counter=collections.Counter()
 
@@ -299,81 +337,190 @@ def generate_ids():
              #             if data[_type]["_type"]== "enumeral_type":
              yield (fieldname,_id)
                     
-field_order_array = [
+# field_order_array = [
+#     ('csts', 'chan', 135 ),
+#     ('csts', 'valu', 139),
+#     ('elts', 'elts', 3 ),
+#     ('elts', 'flds', 947 ),
+#     ('elts', 'name', 221 ),
+#     ('elts', 'ptd', 12 ),
+# #    ('elts', 'scpe_rev', 25 ),
+# #    ('flds', 'name', 612 ),
+# #    ('flds', 'srcp', 629 ),
+# #    ('flds', 'type', 629 ),
+# #    ('flds', 'chan', 629 ),
+#     # list nodes
+#     ('chan', 'purp', 1 ),
+#     ('chan', 'valu', 1 ), 
+# #    ('name', 'name', 501 ),
+# #    ('name', 'srcp', 560 ),
+# #    ('name', 'type', 839 ),
+# #    ('name', '_string', 1 ),    
+#     ('ptd', 'csts', 2),
+#     ('ptd', 'elts', 77),
+# #    ('ptd', 'flds', 318),
+#     ('ptd', 'name', 473),
+#     ('ptd', 'ptd', 54),
+#     ('ptd', 'retn', 406),
+# #    ('ptd', 'scpe_rev', 187),
+#     ('retn', 'csts', 13 ),
+# #    ('retn', 'flds', 4 ),
+#     ('retn', 'name', 1489 ),
+#     ('retn', 'ptd', 352 ),
+# #    ('scpe_rev', 'name', 582 ),
+# #    ('scpe_rev', 'srcp', 924 ),
+# #    ('scpe_rev', 'type', 933 ),
+#     ('type', 'csts', 1607 ),
+#     ('type', 'elts', 561),
+#     ('type', 'flds', 2254),
+#     ('type', 'name', 15245),
+#     ('type', 'ptd', 5571),
+#     ('type', 'retn', 4080 ),
+#     ('type', 'type', 1 ),    
+#     ('valu', 'csts', 34 ),
+# #    ('valu', 'flds', 5 ),
+#     ('valu', 'name', 1543 ),
+#     ('valu', 'ptd', 2651 ),
+#     ('valu', 'type', 1402 ),
+#     ('valu', 'value', 1402 ),
+#     ('value', 'chan', 31 ),
+#     # ('value', 'csts', 1 ),
+#     # ('value', 'elts', 5 ),
+#     # ('value', 'flds', 13 ),
+#     # ('value', 'name', 359 ),
+#     # ('value', 'ptd', 8 ),
+#     # ('value', 'retn', 15 ),
+#     # ('value', 'scpe_rev', 15 ),
+#     # ('value', 'srcp', 156 ),
+#     # ('value', 'type', 398 ),
+#     # ('value', 'valu', 32 ),
+#     # ('value', 'value', 105 ),
+# # type result
+# # type enums
+# # type params
+# # type types
+# # type vars
+# # type funcs
+# # type labels
+# #     elts result
+# #     elts enums
+# #     elts params
+# #     elts flds
+# # elts types
+# # elts vars
+# # elts funcs
+# # elts labels    
+# # ptd result
+# # ptd enums
+# # ptd params
+# # ptd flds
+# # ptd types
+# # ptd vars
+# # ptd funcs
+# # ptd labels    
+# # retn result
+# # retn enums
+# # retn params
+# # retn flds
+# # retn types
+# # retn vars
+# # retn funcs
+# # retn labels    
+# # csts result
+# # csts enums
+# # csts params
+# # csts flds
+# # csts types
+# # csts vars
+# # csts funcs
+# # csts labels    
+# # valu result
+# # valu enums
+# # valu params
+# # valu flds
+# # valu types
+# # valu vars
+# # valu funcs
+# # valu labels
+# # value result
+# # value enums
+# # value params
+# # value flds
+# # value types
+# # value vars
+# # value funcs
+# # value labels
+# # chan result
+# # chan enums
+# # chan params
+# # chan flds
+# # chan types
+# # chan vars
+# # chan funcs
+# # chan labels
+# #    ' funcs result
+# # funcs enums
+# # funcs params
+# # funcs flds
+# # funcs types
+# # funcs vars
+# # funcs funcs
+# # funcs labels
+# ]
+# field_order = { n[0]: {} for n in field_order_array }
 
-    ('csts', 'chan', 135 ),
-    ('csts', 'valu', 139),
-    ('elts', 'elts', 3 ),
-    ('elts', 'flds', 28 ),
-    ('elts', 'name', 221 ),
-    ('elts', 'ptd', 12 ),
-    ('elts', 'scpe_rev', 25 ),
-    ('flds', 'name', 612 ),
-    ('flds', 'srcp', 629 ),
-    ('flds', 'type', 629 ),
-    ('flds', 'chan', 629 ),
-
-    # list nodes
-    ('chan', 'purp', 1 ),
-    ('chan', 'valu', 1 ), 
-
-#    ('name', 'name', 501 ),
-#    ('name', 'srcp', 560 ),
-#    ('name', 'type', 839 ),
-#    ('name', '_string', 1 ),
+field_order = {
+    'flds' : { 'type': 629 },
     
-    ('ptd', 'csts', 2),
-    ('ptd', 'elts', 77),
-    ('ptd', 'flds', 318),
-    ('ptd', 'name', 473),
-    ('ptd', 'ptd', 54),
-    ('ptd', 'retn', 406),
-    ('ptd', 'scpe_rev', 187),
-    ('retn', 'csts', 13 ),
-    ('retn', 'flds', 4 ),
-    ('retn', 'name', 1489 ),
-    ('retn', 'ptd', 352 ),
-    ('scpe_rev', 'name', 582 ),
-    ('scpe_rev', 'srcp', 924 ),
-    ('scpe_rev', 'type', 933 ),
+    'chan': {'purp': 0, 'valu': 0},
 
-    ('type', 'csts', 1607 ),
-    ('type', 'elts', 561),
-    ('type', 'flds', 2254),
-    ('type', 'name', 15245),
-    ('type', 'ptd', 5571),
-    ('type', 'retn', 4080 ),
-    ('type', 'scpe_rev', 2041),
-    ('type', 'type', 1 ),
+    'csts': {'chan': 0, 'valu': 0},
+
+    'elts': {'elts': 0, 'flds': 947, 'name': 0, 'ptd': 0},
+
+    'funcs': {'labels': 802122,
+              'params': 802374,
+              'result': 802374,
+              'types': 802354,
+              'vars': 802374},
+
+    'ptd': {'csts': 0, 'elts': 0, 'flds': 6376, 'name': 0, 'ptd': 0, 'retn': 0},
+
+    'retn': {'csts': 0, 'name': 0, 'ptd': 0},
     
-    ('valu', 'csts', 34 ),
-    ('valu', 'flds', 5 ),
-    ('valu', 'name', 1543 ),
-    ('valu', 'ptd', 2651 ),
-    ('valu', 'type', 1402 ),
-    ('valu', 'value', 1402 ),
+    'type': {'csts': 0,
+             'elts': 0,
+             'flds': 131031,
+             'labels': 129141,
+             'name': 0,
+             'params': 130215,
+             'ptd': 0,
+             'result': 130215,
+             'retn': 0,
+             'type': 0,
+             'types': 126684,
+             'vars': 126684},
 
-    ('value', 'chan', 31 ),
-    # ('value', 'csts', 1 ),
-    # ('value', 'elts', 5 ),
-    # ('value', 'flds', 13 ),
-    # ('value', 'name', 359 ),
-    # ('value', 'ptd', 8 ),
-    # ('value', 'retn', 15 ),
-    # ('value', 'scpe_rev', 15 ),
-    # ('value', 'srcp', 156 ),
-    # ('value', 'type', 398 ),
-    # ('value', 'valu', 32 ),
-    # ('value', 'value', 105 ),
+    'valu': {
+        'csts': 0, 'name': 0, 'ptd': 0, 'type': 0, 'value': 0
+    },
+    
+    'value': {
+        'chan': 0,
+        'enums': 50332,
+        'flds': 50355,
+        'funcs': 50332,
+        'types': 50332,
+        'vars': 50332
+    }
+}
+ 
+# for n in field_order_array :
+#     f1 = n[0]
+#     f2 = n[1]
+#     field_order[f1][f2]=0
 
-]
-
-field_order = { n[0]: {} for n in field_order_array }
-for n in field_order_array :
-    f1 = n[0]
-    f2 = n[1]
-    field_order[f1][f2]=n[2]
-
+    
 def my_lookup_fields(field):
     # given a fieldname return what fields we should look for
     if field in field_order:
@@ -412,21 +559,16 @@ def myreduce2(item):
 def doset(item, field, child):
     #print("resolve",item,field,child)
     fname = "__" + field
-
-    if fname not in item :        
-        item[fname] = child
-    else:
-        old = item[fname]
-        # convert to a list or append to the list
-        if isinstance(old,list):
-            old.append( child)
+    
+    if field in reverse_fields:
+        if fname not in item :        
+            item[fname] = [ child ] 
         else:
-            item[fname] = [old, child]
+            item[fname].append( child)
+    else:
+        item[fname] = child
             
     return item
-    #print("resolve",item)
-
-
 
 
 def myreduce(item):
@@ -498,8 +640,23 @@ def process_graph(start_gen, lookup_fields):
                     #if item['_type'] == "tree_list":
                 #import pdb
                 #pdb.set_trace()
-                
-            for fieldname2 in lookup_fields(field):
+
+            next_fields = list(lookup_fields(field))
+            # for f2 in reverse_fields:
+            #     if nextid in collected[f2]:
+            #         next_fields.append(f2)
+            #     if field in field_order:
+            #         if f2 not in field_order[field]:
+            #             if nextid in collected[f2]:
+            #                 field_order[field][f2]=1
+            #         else:
+            #             field_order[field][f2]=field_order[field][f2]+1
+            #     else:
+            #         if nextid in collected[f2]:
+            #             field_order[field]={ f2 : 1}
+            #             #print(field,f2)
+
+            for fieldname2 in next_fields:
                 #if fieldname2 in ('_string',):
                     
                 #print("field map", field, fieldname2)
@@ -525,6 +682,7 @@ def process_graph(start_gen, lookup_fields):
                                 value2 = collected[fieldname2][value2]
                     else:
                         if isinstance(value2, list):
+                            item[fieldname2]=[]
                             for v in value2:
                                 if v not in seen:
                                     seen[v]=1
@@ -570,6 +728,7 @@ def process_graph(start_gen, lookup_fields):
             #finished.append(myreduce(item))
         finished.append(root)
 
+
     return (finished)
 
 
@@ -612,24 +771,22 @@ def visitchain(x):
 #         elif f.startswith("__"):
 #             ret[f] = visit(x[f])
 #     return ret
-def abstract(n, ret={}):
-    if n is None :
+def abstract(node, ret={}):
+    if node is None :
         return "None"
-    for x in n:        
-        v = n[x]
-        if x == '__csts':
-            ret[x] = "CONSTANTS"
+    for field_name in node:        
+        value = node[field_name]
+        if field_name == '__csts':
+            ret[field_name] = "CONSTANTS"
 
-        elif isinstance(v,dict):
-            ret[x] = abstract(v, {})
-        elif isinstance(v,list):
-            n = {}
-            #ret[x] = [ abstract(y, n) for y in v]
-            ret[x] = "list"
-        elif x == '_type':
-            ret['___type'] = v
+        elif isinstance(value,dict):
+            ret[field_name] = abstract(value, {})
+        elif isinstance(value,list):
+            ret[field_name] = "list"
+        elif field_name == '_type':
+            ret['___type'] = value
         else:
-            ret[x] = str(type(v))
+            ret[field_name] = str(type(value))
             
     return ret
     
@@ -638,7 +795,9 @@ for x in process_graph(generate_ids, my_lookup_fields):
     data = match_patterns(y)
     if data :
         #print(data)
-        pass
+        
+        #print(json.dumps(abstract(data)))
+        print(json.dumps(data))
     else:
         #print(json.dumps(abstract(y)))
         pass
